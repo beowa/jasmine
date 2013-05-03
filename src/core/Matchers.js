@@ -26,8 +26,12 @@ jasmine.Matchers.wrapInto_ = function(prototype, matchersClass) {
 };
 
 jasmine.Matchers.matcherFn_ = function(matcherName, matcherFunction) {
+  var matcherArgs = jasmine.util.argsToArray(arguments);
+  this.matcherArgs = matcherArgs;
+  this.matcherName = matcherName;
+
   return function() {
-    var matcherArgs = jasmine.util.argsToArray(arguments);
+
     var result = matcherFunction.apply(this, arguments);
 
     if (this.isNot) {
@@ -65,6 +69,86 @@ jasmine.Matchers.matcherFn_ = function(matcherName, matcherFunction) {
   };
 };
 
+jasmine.Matchers.prototype.equalityTesters_ = [];
+
+jasmine.Matchers.prototype.addEqualityTester = function(equalityTester) {
+  this.equalityTesters_.push(equalityTester);
+};
+
+jasmine.Matchers.prototype.equals_ = function(a, b, mismatchKeys, mismatchValues) {
+  mismatchKeys = mismatchKeys || [];
+  mismatchValues = mismatchValues || [];
+
+  for (var i = 0; i < this.equalityTesters_.length; i++) {
+    var equalityTester = this.equalityTesters_[i];
+    var result = equalityTester(a, b, this, mismatchKeys, mismatchValues);
+    if (!jasmine.util.isUndefined(result)) {
+      return result;
+    }
+  }
+
+  if (a === b) return true;
+
+  if (jasmine.util.isUndefined(a) || a === null || jasmine.util.isUndefined(b) || b === null) {
+    return (jasmine.util.isUndefined(a) && jasmine.util.isUndefined(b));
+  }
+
+  if (jasmine.isDomNode(a) && jasmine.isDomNode(b)) {
+    return a === b;
+  }
+
+  if (a instanceof Date && b instanceof Date) {
+    return a.getTime() == b.getTime();
+  }
+
+  if (a.jasmineMatches) {
+    return a.jasmineMatches(b);
+  }
+
+  if (b.jasmineMatches) {
+    return b.jasmineMatches(a);
+  }
+
+  if (a instanceof jasmine.Matchers.ObjectContaining) {
+    return a.matches(b);
+  }
+
+  if (b instanceof jasmine.Matchers.ObjectContaining) {
+    return b.matches(a);
+  }
+
+  if (jasmine.isString_(a) && jasmine.isString_(b)) {
+    return (a == b);
+  }
+
+  if (jasmine.isNumber_(a) && jasmine.isNumber_(b)) {
+    return (a == b);
+  }
+
+  if (a instanceof RegExp && b instanceof RegExp) {
+    return this.compareRegExps_(a, b, mismatchKeys, mismatchValues);
+  }
+
+  if (typeof a === "object" && typeof b === "object") {
+    return this.compareObjects_(a, b, mismatchKeys, mismatchValues);
+  }
+
+  //Straight check
+  return (a === b);
+};
+
+jasmine.Matchers.prototype.contains_ = function(haystack, needle) {
+  // TODO: isArray_ is used where?
+  if (jasmine.isArray_(haystack)) {
+    for (var i = 0; i < haystack.length; i++) {
+      if (this.equals_(haystack[i], needle)) return true;
+    }
+    return false;
+  }
+  return haystack.indexOf(needle) >= 0;
+};
+
+
 jasmine.Matchers.prototype.toBe = function(expected) {
   return this.actual === expected;
 };
@@ -74,11 +158,11 @@ jasmine.Matchers.prototype.toNotBe = function(expected) {
 };
 
 jasmine.Matchers.prototype.toEqual = function(expected) {
-  return this.env.equals_(this.actual, expected);
+  return this.equals_(this.actual, expected);
 };
 
 jasmine.Matchers.prototype.toNotEqual = function(expected) {
-  return !this.env.equals_(this.actual, expected);
+  return !this.equals_(this.actual, expected);
 };
 
 jasmine.Matchers.prototype.toMatch = function(expected) {
@@ -174,7 +258,7 @@ jasmine.Matchers.prototype.toHaveBeenCalledWith = function() {
     return [positiveMessage, invertedMessage];
   };
 
-  return this.env.contains_(this.actual.argsForCall, expectedArgs);
+  return this.contains_(this.actual.argsForCall, expectedArgs);
 };
 
 // TODO: kill for 2.0
@@ -194,15 +278,11 @@ jasmine.Matchers.prototype.wasNotCalledWith = function() {
     ];
   };
 
-  return !this.env.contains_(this.actual.argsForCall, expectedArgs);
+  return !this.contains_(this.actual.argsForCall, expectedArgs);
 };
 
 jasmine.Matchers.prototype.toContain = function(expected) {
-  return this.env.contains_(this.actual, expected);
-};
-
-jasmine.Matchers.prototype.toNotContain = function(expected) {
-  return !this.env.contains_(this.actual, expected);
+  return this.contains_(this.actual, expected);
 };
 
 jasmine.Matchers.prototype.toBeLessThan = function(expected) {
@@ -234,7 +314,7 @@ jasmine.Matchers.prototype.toThrow = function(expected) {
 
   if (exception) {
     exceptionMessage = exception.message || exception;
-    result = (jasmine.util.isUndefined(expected) || this.env.equals_(exceptionMessage, expected.message || expected) || (jasmine.isA_("RegExp", expected) && expected.test(exceptionMessage)));
+    result = (jasmine.util.isUndefined(expected) || this.equals_(exceptionMessage, expected.message || expected) || (jasmine.isA_("RegExp", expected) && expected.test(exceptionMessage)));
   }
 
   var not = this.isNot ? "not " : "";

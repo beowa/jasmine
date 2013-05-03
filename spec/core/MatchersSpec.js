@@ -1,4 +1,279 @@
-describe("jasmine.Matchers", function() {
+describe("jasmine.Matchers - unit", function() {
+
+  // TODO: Break each expectation out into its own spec
+  // TODO: Move expectation mechanics into an expectation object
+
+  // TODO: toEqual - unit tests for each, change equals_ implementation
+
+  it("toBe", function() {
+    var actual = 1,
+      matcher = new jasmine.Matchers({}, actual, {});
+
+    expect(matcher.toBe(1)).toBe(true);
+    expect(matcher.toBe(2)).toBe(false);
+  });
+
+  it("toMatch with a RegExp", function() {
+    var actual = /foo/,
+      matcher = new jasmine.Matchers({}, actual, {});
+
+    expect(matcher.toMatch(/foo/)).toBe(true);
+    expect(matcher.toMatch(/bar/)).toBe(false);
+  });
+
+  it("toMatch with a String", function() {
+    var actual = 'foo',
+      matcher = new jasmine.Matchers({}, actual, {});
+
+    expect(matcher.toMatch(/foo/)).toBe(true);
+    expect(matcher.toMatch(/bar/)).toBe(false);
+  });
+
+  it("toBeDefined with a defined value", function() {
+    var defined = new jasmine.Matchers({}, 'foo', {});
+
+    expect(defined.toBeDefined()).toBe(true);
+  });
+
+  it("toBeDefined with an undefined value", function() {
+    var undefinedValue = new jasmine.Matchers({}, void 0, {});
+
+    expect(undefinedValue.toBeDefined()).toBe(false);
+  });
+
+  it("toBeUndefined with a defined value", function() {
+    var defined = new jasmine.Matchers({}, 'foo', {});
+
+    expect(defined.toBeUndefined()).toBe(false);
+  });
+
+  it("toBeUndefined with an undefined value", function() {
+    var undefinedValue = new jasmine.Matchers({}, void 0, {});
+
+    expect(undefinedValue.toBeUndefined()).toBe(true);
+  });
+
+  it("toBeNull", function() {
+    var postiveMatcher = new jasmine.Matchers({}, null, {}),
+      negativeMatcher = new jasmine.Matchers({}, 'baz', {});
+
+    expect(postiveMatcher.toBeNull()).toBe(true);
+    expect(negativeMatcher.toBeNull()).toBe(false);
+  });
+
+  it("toBeNaN", function() {
+    var postiveMatcher = new jasmine.Matchers({}, Number.NaN, {}),
+      aNumber = new jasmine.Matchers({}, 1, {}),
+      aNull = new jasmine.Matchers({}, null, {}),
+      aNumberConstant = new jasmine.Matchers({}, Number.POSITIVE_INFINITY, {}),
+      aString = new jasmine.Matchers({}, 'NaN', {});
+
+    expect(postiveMatcher.toBeNaN()).toBe(true);
+    expect(aNumber.toBeNaN()).toBe(false);
+    expect(aNull.toBeNaN()).toBe(false);
+    expect(aNumberConstant.toBeNaN()).toBe(false);
+    expect(aString.toBeNaN()).toBe(false);
+  });
+
+  xit("toBeNaN custom message", function() {
+  });
+
+  it("toBeTruthy", function() {
+    var aTrue = new jasmine.Matchers({}, true, {}),
+      aFalse = new jasmine.Matchers({}, false, {}),
+      anUndefined = new jasmine.Matchers({}, void 0, {}),
+      aNumber = new jasmine.Matchers({}, 1, {}),
+      aNull = new jasmine.Matchers({}, null, {}),
+      aString = new jasmine.Matchers({}, 'foo', {}),
+      anObject = new jasmine.Matchers({}, {}, {}),
+      aNaN = new jasmine.Matchers({}, Number.NaN, {});
+
+    expect(aTrue.toBeTruthy()).toBe(true);
+    expect(aFalse.toBeTruthy()).toBe(false);
+    expect(anUndefined.toBeTruthy()).toBe(false);
+    expect(aNumber.toBeTruthy()).toBe(true);
+    expect(aNull.toBeTruthy()).toBe(false);
+    expect(aString.toBeTruthy()).toBe(true);
+    expect(anObject.toBeTruthy()).toBe(true);
+    expect(aNaN.toBeTruthy()).toBe(false);
+  });
+
+  it("toBeFalsy", function() {
+    var aTrue = new jasmine.Matchers({}, true, {}),
+      aFalse = new jasmine.Matchers({}, false, {}),
+      anUndefined = new jasmine.Matchers({}, void 0, {}),
+      aNumber = new jasmine.Matchers({}, 1, {}),
+      aNull = new jasmine.Matchers({}, null, {}),
+      aString = new jasmine.Matchers({}, 'foo', {}),
+      anObject = new jasmine.Matchers({}, {}, {}),
+      aNaN = new jasmine.Matchers({}, Number.NaN, {});
+
+    expect(aTrue.toBeFalsy()).toBe(false);
+    expect(aFalse.toBeFalsy()).toBe(true);
+    expect(anUndefined.toBeFalsy()).toBe(true);
+    expect(aNumber.toBeFalsy()).toBe(false);
+    expect(aNull.toBeFalsy()).toBe(true);
+    expect(aString.toBeFalsy()).toBe(false);
+    expect(anObject.toBeFalsy()).toBe(false);
+    expect(aNaN.toBeFalsy()).toBe(true);
+  });
+
+  it("toBeLessThan", function() {
+    var one = new jasmine.Matchers({}, 1, {}),
+      five = new jasmine.Matchers({}, 5, {});
+
+    expect(one.toBeLessThan(2)).toBe(true);
+    expect(five.toBeLessThan(2)).toBe(false);
+  });
+
+  it("toBeGreaterThan", function() {
+    var one = new jasmine.Matchers({}, 1, {}),
+      five = new jasmine.Matchers({}, 5, {});
+
+    expect(one.toBeGreaterThan(0)).toBe(true);
+    expect(five.toBeGreaterThan(10)).toBe(false);
+  });
+
+  describe("toBeCloseTo", function() {
+    it("defaults to within 2 decimal points of precision", function() {
+      var zero = new jasmine.Matchers({}, 0, {});
+
+      expect(zero.toBeCloseTo(0)).toBe(true);
+      expect(zero.toBeCloseTo(0.001)).toBe(true);
+      expect(zero.toBeCloseTo(0.01)).toBe(false);
+    });
+
+    it("accepts an optional precision argument", function() {
+      var zero = new jasmine.Matchers({}, 0, {});
+
+      expect(zero.toBeCloseTo(0.1, 0)).toBe(true);
+      expect(zero.toBeCloseTo(0.0001, 3)).toBe(true);
+    });
+
+    it("rounds expected values", function() {
+      var num = new jasmine.Matchers({}, 1.23, {});
+
+      expect(num.toBeCloseTo(1.229)).toBe(true);
+      expect(num.toBeCloseTo(1.226)).toBe(true);
+      expect(num.toBeCloseTo(1.225)).toBe(true);
+      expect(num.toBeCloseTo(1.2249999)).toBe(false);
+      expect(num.toBeCloseTo(1.234)).toBe(true);
+    });
+  });
+
+  xdescribe("toContain", function() {
+
+    it("matches strings", function() {
+      var str = new jasmine.Matchers({}, 'ABC', {});
+
+      expect(str.toContain('A')).toBe(true);
+      expect(str.toContain('X')).toBe(false);
+    });
+
+    it("matches strings in arrays", function() {
+      var strArray = new jasmine.Matchers({}, ['foo', 'bar'], {});
+
+      expect(strArray.toContain('bar')).toBe(true);
+      expect(strArray.toContain('quux')).toBe(false);
+    });
+
+    it("matches objects in arrays", function() {
+      var mixedArray = new jasmine.Matchers({}, ['foo', {some: 'object'}], {});
+
+      expect(mixedArray.toContain('foo')).toBe(true);
+      expect(mixedArray.toContain({some: 'object'})).toBe(true);
+      expect(mixedArray.toContain({some: 'other object'})).toBe(false);
+    });
+  });
+
+  // toHaveBeenCalled
+
+  // toHaveBeenCalledWith
+
+
+  // toThrow
+
+  xdescribe("equality testing", function() {
+    describe("with custom equality testers", function() {
+      var aObj, bObj, isEqual;
+
+      beforeEach(function() {
+        jasmine.Matchers.prototype.addEqualityTester(function(a, b) {
+          aObj = a;
+          bObj = b;
+          return isEqual;
+        });
+      });
+
+      it("should call the custom equality tester with two objects for comparison", function() {
+        jasmine.Matchers.prototype.equals_("1", "2");
+        expect(aObj).toEqual("1");
+        expect(bObj).toEqual("2");
+      });
+
+      describe("when the custom equality tester returns false", function() {
+        beforeEach(function() {
+          isEqual = false;
+        });
+
+        it("should give custom equality testers precedence", function() {
+          expect(jasmine.Matchers.prototype.equals_('abc', 'abc')).toBeFalsy();
+          var o = {};
+          expect(jasmine.Matchers.prototype.equals_(o, o)).toBeFalsy();
+        });
+      });
+
+
+      describe("when the custom equality tester returns true", function() {
+        beforeEach(function() {
+          isEqual = true;
+        });
+
+        it("should give custom equality testers precedence", function() {
+          expect(jasmine.Matchers.prototype.equals_('abc', 'def')).toBeTruthy();
+          expect(jasmine.Matchers.prototype.equals_(true, false)).toBeTruthy();
+        });
+      });
+
+      describe("when the custom equality tester returns undefined", function() {
+        beforeEach(function() {
+          isEqual = jasmine.undefined;
+        });
+
+        it("should use normal equality rules", function() {
+          expect(jasmine.Matchers.prototype.equals_('abc', 'abc')).toBeTruthy();
+          expect(jasmine.Matchers.prototype.equals_('abc', 'def')).toBeFalsy();
+        });
+
+        describe("even if there are several", function() {
+          beforeEach(function() {
+            jasmine.Matchers.prototype.addEqualityTester(function(a, b) {
+              return jasmine.undefined;
+            });
+            jasmine.Matchers.prototype.addEqualityTester(function(a, b) {
+              return jasmine.undefined;
+            });
+          });
+
+          it("should use normal equality rules", function() {
+            expect(jasmine.Matchers.prototype.equals_('abc', 'abc')).toBeTruthy();
+            expect(jasmine.Matchers.prototype.equals_('abc', 'def')).toBeFalsy();
+          });
+        });
+      });
+
+      it("should evaluate custom equality testers in the order they are declared", function() {
+        isEqual = false;
+        jasmine.Matchers.prototype.addEqualityTester(function(a, b) {
+          return true;
+        });
+        expect(jasmine.Matchers.prototype.equals_('abc', 'abc')).toBeFalsy();
+      });
+    });
+  });
+});
+
+xdescribe("jasmine.Matchers (integration/old tests)", function() {
   var env, spec;
 
   beforeEach(function() {

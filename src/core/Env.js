@@ -28,7 +28,6 @@
 
     this.nextSpecId_ = 0;
     this.nextSuiteId_ = 0;
-    this.equalityTesters_ = [];
 
     // wrap matchers
     this.matchersClass = function() {
@@ -391,68 +390,6 @@
     return (mismatchKeys.length === 0 && mismatchValues.length === 0);
   };
 
-  jasmine.Env.prototype.equals_ = function(a, b, mismatchKeys, mismatchValues) {
-    mismatchKeys = mismatchKeys || [];
-    mismatchValues = mismatchValues || [];
-
-    for (var i = 0; i < this.equalityTesters_.length; i++) {
-      var equalityTester = this.equalityTesters_[i];
-      var result = equalityTester(a, b, this, mismatchKeys, mismatchValues);
-      if (!jasmine.util.isUndefined(result)) {
-        return result;
-      }
-    }
-
-    if (a === b) return true;
-
-    if (jasmine.util.isUndefined(a) || a === null || jasmine.util.isUndefined(b) || b === null) {
-      return (jasmine.util.isUndefined(a) && jasmine.util.isUndefined(b));
-    }
-
-    if (jasmine.isDomNode(a) && jasmine.isDomNode(b)) {
-      return a === b;
-    }
-
-    if (a instanceof Date && b instanceof Date) {
-      return a.getTime() == b.getTime();
-    }
-
-    if (a.jasmineMatches) {
-      return a.jasmineMatches(b);
-    }
-
-    if (b.jasmineMatches) {
-      return b.jasmineMatches(a);
-    }
-
-    if (a instanceof jasmine.Matchers.ObjectContaining) {
-      return a.matches(b);
-    }
-
-    if (b instanceof jasmine.Matchers.ObjectContaining) {
-      return b.matches(a);
-    }
-
-    if (jasmine.isString_(a) && jasmine.isString_(b)) {
-      return (a == b);
-    }
-
-    if (jasmine.isNumber_(a) && jasmine.isNumber_(b)) {
-      return (a == b);
-    }
-
-    if (a instanceof RegExp && b instanceof RegExp) {
-      return this.compareRegExps_(a, b, mismatchKeys, mismatchValues);
-    }
-
-    if (typeof a === "object" && typeof b === "object") {
-      return this.compareObjects_(a, b, mismatchKeys, mismatchValues);
-    }
-
-    //Straight check
-    return (a === b);
-  };
-
   jasmine.Env.prototype.contains_ = function(haystack, needle) {
     if (jasmine.isArray_(haystack)) {
       for (var i = 0; i < haystack.length; i++) {
@@ -461,9 +398,5 @@
       return false;
     }
     return haystack.indexOf(needle) >= 0;
-  };
-
-  jasmine.Env.prototype.addEqualityTester = function(equalityTester) {
-    this.equalityTesters_.push(equalityTester);
   };
 }());
