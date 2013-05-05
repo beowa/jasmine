@@ -1,4 +1,4 @@
-describe("jasmine.CoreMatchers", function() {
+describe("jasmine.coreMatchers", function() {
   describe("toBe", function() {
     it("has the correct name", function() {
       var matcher = jasmine.coreMatchers.toBe;
