@@ -354,7 +354,7 @@ describe("jasmine.coreMatchers", function() {
       expect(result.pass).toBe(true);
     });
 
-    xit("fails when expected is a not substring of actual", function() {
+    it("fails when expected is a not substring of actual", function() {
       var matcher = jasmine.coreMatchers.toContain,
         result;
 
@@ -362,19 +362,31 @@ describe("jasmine.coreMatchers", function() {
       expect(result.pass).toBe(false);
     });
 
-    xit("matches strings in arrays", function() {
-      var strArray = new jasmine.Matchers({}, ['foo', 'bar'], {});
+    it("passes when expected is an element in an actual array", function() {
+      var matcher = jasmine.coreMatchers.toContain,
+        result;
 
-      expect(strArray.toContain('bar')).toBe(true);
-      expect(strArray.toContain('quux')).toBe(false);
+      result = matcher.compare(['foo', 'bar'], 'foo');
+      expect(result.pass).toBe(true);
     });
 
-    xit("matches objects in arrays", function() {
-      var mixedArray = new jasmine.Matchers({}, ['foo', {some: 'object'}], {});
+    it("fails when expected is not an element in an actual array", function() {
+      var matcher = jasmine.coreMatchers.toContain,
+        result;
 
-      expect(mixedArray.toContain('foo')).toBe(true);
-      expect(mixedArray.toContain({some: 'object'})).toBe(true);
-      expect(mixedArray.toContain({some: 'other object'})).toBe(false);
+      result = matcher.compare(['foo', 'bar'], 'baz');
+      expect(result.pass).toBe(false);
+    });
+
+    it("passes with mixed-element arrays", function() {
+      var matcher = jasmine.coreMatchers.toContain,
+        result;
+
+      result = matcher.compare(["foo", {some: "bar"}], "foo");
+      expect(result.pass).toEqual(true);
+
+      result = matcher.compare(["foo", {some: "bar"}], {some: "bar"});
+      expect(result.pass).toEqual(true);
     });
   });
 
@@ -439,9 +451,9 @@ describe("jasmine.coreMatchers", function() {
       expect(matcher.name).toEqual("toHaveBeenCalledWith");
     });
 
-    xit("passes when the actual was called with matching parameters", function() {
+    it("passes when the actual was called with matching parameters", function() {
       var matcher = jasmine.coreMatchers.toHaveBeenCalledWith,
-        calledSpy = jasmine.createSpy('called spy'),
+        calledSpy = jasmine.createSpy('called-spy'),
         result;
 
       calledSpy('a', 'b');
@@ -459,7 +471,7 @@ describe("jasmine.coreMatchers", function() {
       expect(result.pass).toBe(false);
     });
 
-    xit("fails when the actual was called with different parameters", function() {
+    it("fails when the actual was called with different parameters", function() {
       var matcher = jasmine.coreMatchers.toHaveBeenCalledWith,
         calledSpy = jasmine.createSpy('called spy'),
         result;
@@ -477,7 +489,7 @@ describe("jasmine.coreMatchers", function() {
       expect(function() { matcher.compare(fn) }).toThrow("Expected a spy, but got Function.");
     });
 
-    xit("has a custom message on failure", function() {
+    it("has a custom message on failure", function() {
       var matcher = jasmine.coreMatchers.toHaveBeenCalledWith,
         spy = jasmine.createSpy('sample-spy')
         messages = matcher.message(spy);

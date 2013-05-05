@@ -101,9 +101,10 @@ jasmine.coreMatchers = (function() {
     toContain: {
       name: "toContain",
       compare: function(actual, expected) {
+
         return {
-          pass: true
-        }
+          pass: contains(actual, expected)
+        };
       }
     },
 
@@ -154,18 +155,15 @@ jasmine.coreMatchers = (function() {
       compare: function() {
         var args = Array.prototype.slice.call(arguments, 0),
           actual = args[0],
-          expectedArgs = args.slice[1],
-          result;
+          expectedArgs = args.slice(1);
 
         if (!jasmine.isSpy(actual)) {
           throw new Error('Expected a spy, but got ' + jasmine.pp(actual) + '.');
         }
 
-        result = {
-          pass: actual.wasCalled
+        return {
+          pass: contains(actual.argsForCall, expectedArgs)
         };
-
-        return result;
       },
       message: function(actual) {
         return {
@@ -251,7 +249,6 @@ jasmine.coreMatchers = (function() {
   };
 
   // Equality function lovingly adapted from isEqual in [Underscore](http://underscorejs.org)
-
   function eq(a, b, aStack, bStack) {
     // Identical objects are equal. `0 === -0`, but they aren't identical.
     // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
@@ -335,14 +332,28 @@ jasmine.coreMatchers = (function() {
     // Remove the first object from the stack of traversed objects.
     aStack.pop();
     bStack.pop();
+
     return result;
+
+    function has(obj, key) {
+      return Object.prototype.hasOwnProperty.call(obj, key);
+    }
+
+    function isFunction(obj) {
+      return typeof obj === 'function';
+    }
   }
 
-  function has(obj, key) {
-    return Object.prototype.hasOwnProperty.call(obj, key);
+  function contains(haystack, needle) {
+    if (Object.prototype.toString.apply(haystack) === "[object Array]") {
+      for (var i = 0; i < haystack.length; i++) {
+        if (eq(haystack[i], needle, [], [])) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return haystack.indexOf(needle) >= 0;
   }
 
-  function isFunction(obj) {
-    return typeof obj === 'function';
-  }
 }());
