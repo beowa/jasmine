@@ -6,7 +6,7 @@ describe("jasmine.coreMatchers", function() {
       expect(matcher.name).toEqual("toBe");
     });
 
-    it("passes when threeqal passes", function() {
+    it("passes when actual === expected", function() {
       var matcher = jasmine.coreMatchers.toBe,
         result;
 
@@ -14,7 +14,7 @@ describe("jasmine.coreMatchers", function() {
       expect(result.pass).toBe(true);
     });
 
-    it("fails when threeqal fails", function() {
+    it("fails when actual !== expected", function() {
       var matcher = jasmine.coreMatchers.toBe,
         result;
 
@@ -215,7 +215,7 @@ describe("jasmine.coreMatchers", function() {
 
       result = matcher.compare(Number.NaN);
       expect(result.pass).toBe(true);
-      expect(result.message.notFail).toEqual("Expected actual not to be NaN.");
+      expect(result.message).toEqual("Expected actual not to be NaN.");
     });
 
     it("fails for anything not a NaN", function() {
@@ -241,7 +241,7 @@ describe("jasmine.coreMatchers", function() {
       var matcher = jasmine.coreMatchers.toBeNaN,
         result = matcher.compare(0);
 
-      expect(result.message.fail).toEqual("Expected 0 to be NaN.");
+      expect(result.message).toEqual("Expected 0 to be NaN.");
     });
   });
 
@@ -407,7 +407,7 @@ describe("jasmine.coreMatchers", function() {
 
       result = matcher.compare(calledSpy);
       expect(result.pass).toBe(true);
-      expect(result.message.notFail).toEqual("Expected spy called-spy not to have been called.");
+      expect(result.message).toEqual("Expected spy called-spy not to have been called.");
     });
 
     it("fails when the actual was not called", function() {
@@ -439,7 +439,7 @@ describe("jasmine.coreMatchers", function() {
 
       result = matcher.compare(spy);
 
-      expect(result.message.fail).toEqual("Expected spy sample-spy to have been called.");
+      expect(result.message).toEqual("Expected spy sample-spy to have been called.");
     });
   });
 
@@ -577,7 +577,7 @@ describe("jasmine.coreMatchers", function() {
       result = matcher.compare(fn);
 
       expect(result.pass).toBe(true);
-      expect(result.message.notFail).toEqual("Expected function not to throw an exception.");
+      expect(result.message).toEqual("Expected function not to throw an exception.");
     });
 
     it("fails if the actual does not throw an exception", function() {
@@ -590,7 +590,7 @@ describe("jasmine.coreMatchers", function() {
       result = matcher.compare(fn);
 
       expect(result.pass).toBe(false);
-      expect(result.message.fail).toEqual("Expected function to throw an exception.");
+      expect(result.message).toEqual("Expected function to throw an exception.");
     });
 
     it("passes if the actual throws an exception with the expected message", function() {
@@ -603,7 +603,7 @@ describe("jasmine.coreMatchers", function() {
       result = matcher.compare(fn, "foo");
 
       expect(result.pass).toBe(true);
-      expect(result.message.notFail).toEqual("Expected function not to throw an exception \"foo\".");
+      expect(result.message).toEqual("Expected function not to throw an exception \"foo\".");
     });
 
     it("fails if the actual throws an exception with a different message", function() {
@@ -616,7 +616,7 @@ describe("jasmine.coreMatchers", function() {
       result = matcher.compare(fn, "bar");
 
       expect(result.pass).toBe(false);
-      expect(result.message.fail).toEqual("Expected function to throw an exception \"bar\".");
+      expect(result.message).toEqual("Expected function to throw an exception \"bar\".");
     });
 
     it("passes if the actual throws an exception and matches the message of the expected exception", function() {
@@ -629,7 +629,7 @@ describe("jasmine.coreMatchers", function() {
       result = matcher.compare(fn, new Error("foo"));
 
       expect(result.pass).toBe(true);
-      expect(result.message.notFail).toEqual("Expected function not to throw an exception \"foo\".");
+      expect(result.message).toEqual("Expected function not to throw an exception \"foo\".");
     });
 
     it("fails if the actual throws an exception and it does not match the message of the expected exception with a custom message", function() {
@@ -642,7 +642,7 @@ describe("jasmine.coreMatchers", function() {
       result = matcher.compare(fn, new Error("bar"));
 
       expect(result.pass).toBe(false);
-      expect(result.message.fail).toEqual("Expected function to throw an exception \"bar\".");
+      expect(result.message).toEqual("Expected function to throw an exception \"bar\".");
     });
 
     it("passes if the actual throws an exception and the message matches the expected regular expression", function() {
@@ -655,7 +655,7 @@ describe("jasmine.coreMatchers", function() {
       result = matcher.compare(fn, /long/);
 
       expect(result.pass).toBe(true);
-      expect(result.message.notFail).toEqual("Expected function not to throw an exception matching /long/.");
+      expect(result.message).toEqual("Expected function not to throw an exception matching /long/.");
     });
 
     it("fails if the actual throws an exception and the message does not match the expected regular expression", function() {
@@ -668,7 +668,7 @@ describe("jasmine.coreMatchers", function() {
       result = matcher.compare(fn, /short/);
 
       expect(result.pass).toBe(false);
-      expect(result.message.fail).toEqual("Expected function to throw an exception matching /short/.");
+      expect(result.message).toEqual("Expected function to throw an exception matching /short/.");
     });
   });
 });

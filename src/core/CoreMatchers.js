@@ -61,13 +61,17 @@ jasmine.coreMatchers = (function() {
     toBeNaN: {
       name: "toBeNaN",
       compare: function(actual) {
-        return {
-          pass: (actual !== actual),
-          message: {
-            fail: "Expected " + jasmine.pp(actual) + " to be NaN.",
-            notFail: "Expected actual not to be NaN."
-          }
+        var result = {
+          pass: (actual !== actual)
         };
+
+        if (result.pass) {
+          result.message = "Expected actual not to be NaN."
+        } else {
+          result.message = "Expected " + jasmine.pp(actual) + " to be NaN."
+        }
+
+        return result;
       }
     },
 
@@ -117,13 +121,11 @@ jasmine.coreMatchers = (function() {
         };
 
         result.pass = eq(actual, expected, [], []);
-        console.error(actual, expected);
 
-        if (result.pass) {
-          result.message.notFail =  "Expected " + jasmine.pp(actual) + " not to equal " + jasmine.pp(expected) + ".";
-        } else {
-          result.message.fail =  "Expected " + jasmine.pp(actual) + " to equal " + jasmine.pp(expected) + ".";
-        }
+        // TODO: this might be fine with the default message
+        result.message = result.pass ?
+          "Expected " + jasmine.pp(actual) + " not to equal " + jasmine.pp(expected) + "." :
+          "Expected " + jasmine.pp(actual) + " to equal " + jasmine.pp(expected) + ".";
 
         return result;
       }
@@ -132,6 +134,8 @@ jasmine.coreMatchers = (function() {
     toHaveBeenCalled: {
       name: "toHaveBeenCalled",
       compare: function(actual) {
+        var result = {};
+
         if (!jasmine.isSpy(actual)) {
           throw new Error('Expected a spy, but got ' + jasmine.pp(actual) + '.');
         }
@@ -140,13 +144,13 @@ jasmine.coreMatchers = (function() {
           throw new Error('toHaveBeenCalled does not take arguments, use toHaveBeenCalledWith');
         }
 
-        return {
-          pass: actual.wasCalled,
-          message: {
-            fail: "Expected spy " + actual.identity + " to have been called.",
-            notFail: "Expected spy " + actual.identity + " not to have been called."
-          }
-        };
+        result.pass = actual.wasCalled;
+
+        result.message = result.pass ?
+          "Expected spy " + actual.identity + " not to have been called." :
+          "Expected spy " + actual.identity + " to have been called.";
+
+        return result;
       }
     },
 
@@ -187,10 +191,7 @@ jasmine.coreMatchers = (function() {
     toThrow: {
       name: "toThrow",
       compare: function(actual, expected) {
-        var result = {
-            pass: false,
-            message: {}
-          },
+        var result = { pass: false },
           exception;
 
         if (typeof actual != "function") {
@@ -208,30 +209,30 @@ jasmine.coreMatchers = (function() {
         }
 
         if (!exception) {
-          result.message.fail = "Expected function to throw an exception.";
+          result.message = "Expected function to throw an exception.";
           return result;
         }
 
         if (void 0 == expected) {
           result.pass = true;
-          result.message.notFail = "Expected function not to throw an exception.";
+          result.message = "Expected function not to throw an exception.";
         } else if (exception.message == expected) {
           result.pass = true;
-          result.message.notFail = "Expected function not to throw an exception \"" + expected + "\".";
+          result.message = "Expected function not to throw an exception \"" + expected + "\".";
         } else if (exception.message == expected.message) {
           result.pass = true;
-          result.message.notFail = "Expected function not to throw an exception \"" + expected.message + "\".";
+          result.message = "Expected function not to throw an exception \"" + expected.message + "\".";
         } else if (expected instanceof RegExp) {
           if (expected.test(exception.message)) {
             result.pass = true;
-            result.message.notFail = "Expected function not to throw an exception matching " + expected + ".";
+            result.message = "Expected function not to throw an exception matching " + expected + ".";
           } else {
             result.pass = false;
-            result.message.fail = "Expected function to throw an exception matching " + expected + ".";
+            result.message = "Expected function to throw an exception matching " + expected + ".";
           }
         } else {
           result.pass = false;
-          result.message.fail = "Expected function to throw an exception \"" + (expected.message || expected) + "\"."
+          result.message = "Expected function to throw an exception \"" + (expected.message || expected) + "\"."
         }
 
         return result;
