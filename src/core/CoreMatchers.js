@@ -1,7 +1,6 @@
 jasmine.coreMatchers = (function() {
   return {
     toBe: {
-      name: "toBe",
       compare: function(actual, expected) {
         return {
           pass: actual === expected
@@ -10,7 +9,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toBeCloseTo: {
-      name: "toBeCloseTo",
       compare: function(actual, expected, precision) {
         if (precision !== 0) {
           precision = precision || 2;
@@ -23,7 +21,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toBeDefined: {
-      name: "toBeDefined",
       compare: function(actual) {
         return {
           pass: !jasmine.util.isUndefined(actual)
@@ -32,7 +29,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toBeFalsy: {
-      name: "toBeFalsy",
       compare: function(actual) {
         return {
           pass: !!!actual
@@ -41,7 +37,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toBeGreaterThan: {
-      name: "toBeGreaterThan",
       compare: function(actual, expected) {
         return {
           pass: actual > expected
@@ -50,7 +45,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toBeLessThan: {
-      name: "toBeLessThan",
       compare: function(actual, expected) {
         return {
           pass: actual < expected
@@ -59,7 +53,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toBeNaN: {
-      name: "toBeNaN",
       compare: function(actual) {
         var result = {
           pass: (actual !== actual)
@@ -76,7 +69,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toBeNull: {
-      name: "toBeNull",
       compare: function(actual) {
         return {
           pass: actual === null
@@ -85,7 +77,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toBeTruthy: {
-      name: "toBeTruthy",
       compare: function(actual) {
         return {
           pass: !!actual
@@ -94,7 +85,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toBeUndefined: {
-      name: "toBeUndefined",
       compare: function(actual) {
         return {
           pass: void 0 === actual
@@ -103,7 +93,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toContain: {
-      name: "toContain",
       compare: function(actual, expected) {
 
         return {
@@ -113,7 +102,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toEqual: {
-      name: "toEqual",
       compare: function(actual, expected) {
         var result = {
           pass: false,
@@ -132,7 +120,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toHaveBeenCalled: {
-      name: "toHaveBeenCalled",
       compare: function(actual) {
         var result = {};
 
@@ -155,7 +142,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toHaveBeenCalledWith: {
-      name: "toHaveBeenCalledWith",
       compare: function() {
         var args = Array.prototype.slice.call(arguments, 0),
           actual = args[0],
@@ -178,7 +164,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toMatch: {
-      name: "toMatch",
       compare: function(actual, expected) {
         var regexp = new RegExp(expected);
 
@@ -189,7 +174,6 @@ jasmine.coreMatchers = (function() {
     },
 
     toThrow: {
-      name: "toThrow",
       compare: function(actual, expected) {
         var result = { pass: false },
           exception;
@@ -356,5 +340,4 @@ jasmine.coreMatchers = (function() {
     }
     return haystack.indexOf(needle) >= 0;
   }
-
 }());

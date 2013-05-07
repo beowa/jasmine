@@ -1,11 +1,5 @@
-describe("jasmine.coreMatchers", function() {
+describe("Core Matchers", function() {
   describe("toEqual", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toEqual;
-
-      expect(matcher.name).toEqual("toEqual");
-    });
-
     it("passes for literals that are threequal", function() {
       var matcher = jasmine.coreMatchers.toEqual,
         result;
@@ -135,7 +129,7 @@ describe("jasmine.coreMatchers", function() {
       var matcher = jasmine.coreMatchers.toEqual,
         result;
 
-      result = matcher.compare([1,2], [1,2]);
+      result = matcher.compare([1, 2], [1, 2]);
       expect(result.pass).toBe(true);
       expect(result.message).toEqual("Expected [ 1, 2 ] not to equal [ 1, 2 ].");
     });
@@ -144,7 +138,7 @@ describe("jasmine.coreMatchers", function() {
       var matcher = jasmine.coreMatchers.toEqual,
         result;
 
-      result = matcher.compare([1,2], [1,2,3]);
+      result = matcher.compare([1, 2], [1, 2, 3]);
       expect(result.pass).toBe(false);
       expect(result.message).toEqual("Expected [ 1, 2 ] to equal [ 1, 2, 3 ].");
     });

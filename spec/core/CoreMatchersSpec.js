@@ -1,11 +1,5 @@
-describe("jasmine.coreMatchers", function() {
+describe("Core Matchers", function() {
   describe("toBe", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toBe;
-
-      expect(matcher.name).toEqual("toBe");
-    });
-
     it("passes when actual === expected", function() {
       var matcher = jasmine.coreMatchers.toBe,
         result;
@@ -24,12 +18,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toBeCloseTo", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toBeCloseTo;
-
-      expect(matcher.name).toEqual("toBeCloseTo");
-    });
-
     it("passes when within two decimal places by default", function() {
       var matcher = jasmine.coreMatchers.toBeCloseTo,
         result;
@@ -53,9 +41,9 @@ describe("jasmine.coreMatchers", function() {
       var matcher = jasmine.coreMatchers.toBeCloseTo,
         result;
 
-      result = matcher.compare(0, 0.1, 0); 
+      result = matcher.compare(0, 0.1, 0);
       expect(result.pass).toBe(true);
-      
+
       result = matcher.compare(0, 0.0001, 3);
       expect(result.pass).toBe(true);
     });
@@ -64,9 +52,9 @@ describe("jasmine.coreMatchers", function() {
       var matcher = jasmine.coreMatchers.toBeCloseTo,
         result;
 
-      result = matcher.compare(1.23, 1.229); 
+      result = matcher.compare(1.23, 1.229);
       expect(result.pass).toBe(true);
-      
+
       result = matcher.compare(1.23, 1.226);
       expect(result.pass).toBe(true);
 
@@ -82,12 +70,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toBeDefined", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toBeDefined;
-
-      expect(matcher.name).toEqual("toBeDefined");
-    });
-
     it("matches for defined values", function() {
       var matcher = jasmine.coreMatchers.toBeDefined, result;
 
@@ -105,12 +87,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toBeFalsy", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toBeFalsy;
-
-      expect(matcher.name).toEqual("toBeFalsy");
-    });
-
     it("passes for 'falsy' values", function() {
       var matcher = jasmine.coreMatchers.toBeFalsy,
         result;
@@ -150,12 +126,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toBeGreaterThan", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toBeGreaterThan;
-
-      expect(matcher.name).toEqual("toBeGreaterThan");
-    });
-
     it("passes when actual > expected", function() {
       var matcher = jasmine.coreMatchers.toBeGreaterThan,
         result;
@@ -176,12 +146,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toBeLessThan", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toBeLessThan;
-
-      expect(matcher.name).toEqual("toBeLessThan");
-    });
-
     it("passes when actual < expected", function() {
       var matcher = jasmine.coreMatchers.toBeLessThan,
         result;
@@ -203,12 +167,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toBeNaN", function() {
-    it("should have the correct name", function() {
-      var matcher = jasmine.coreMatchers.toBeNaN;
-
-      expect(matcher.name).toEqual("toBeNaN");
-    });
-
     it("passes for NaN with a custom .not fail", function() {
       var matcher = jasmine.coreMatchers.toBeNaN,
         result;
@@ -246,13 +204,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toBeNull", function() {
-
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toBeNull;
-
-      expect(matcher.name).toEqual("toBeNull");
-    });
-
     it("passes for null", function() {
       var matcher = jasmine.coreMatchers.toBeNull,
         result;
@@ -271,12 +222,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toBeTruthy", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toBeTruthy;
-
-      expect(matcher.name).toEqual("toBeTruthy");
-    });
-
     it("passes for 'truthy' values", function() {
       var matcher = jasmine.coreMatchers.toBeTruthy,
         result;
@@ -316,16 +261,10 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toBeUndefined", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toBeUndefined;
-
-      expect(matcher.name).toEqual("toBeUndefined");
-    });
-
     it("passes for undefined values", function() {
       var matcher = jasmine.coreMatchers.toBeUndefined,
         result;
-      
+
       result = matcher.compare(void 0);
       expect(result.pass).toBe(true);
 
@@ -340,12 +279,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toContain", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toContain;
-
-      expect(matcher.name).toEqual("toContain");
-    });
-
     it("passes when expected is a substring of actual", function() {
       var matcher = jasmine.coreMatchers.toContain,
         result;
@@ -391,18 +324,11 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toHaveBeenCalled", function() {
-
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toHaveBeenCalled;
-
-      expect(matcher.name).toEqual("toHaveBeenCalled");
-    });
-
     it("passes when the actual was called, with a custom .not fail message", function() {
       var matcher = jasmine.coreMatchers.toHaveBeenCalled,
         calledSpy = jasmine.createSpy('called-spy'),
         result;
-      
+
       calledSpy();
 
       result = matcher.compare(calledSpy);
@@ -444,13 +370,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toHaveBeenCalledWith", function() {
-
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toHaveBeenCalledWith;
-
-      expect(matcher.name).toEqual("toHaveBeenCalledWith");
-    });
-
     it("passes when the actual was called with matching parameters", function() {
       var matcher = jasmine.coreMatchers.toHaveBeenCalledWith,
         calledSpy = jasmine.createSpy('called-spy'),
@@ -492,7 +411,7 @@ describe("jasmine.coreMatchers", function() {
     it("has a custom message on failure", function() {
       var matcher = jasmine.coreMatchers.toHaveBeenCalledWith,
         spy = jasmine.createSpy('sample-spy')
-        messages = matcher.message(spy);
+      messages = matcher.message(spy);
 
       expect(messages.affirmative).toEqual("Expected spy sample-spy to have been called.")
       expect(messages.negative).toEqual("Expected spy sample-spy not to have been called.")
@@ -500,12 +419,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toMatch", function() {
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toMatch;
-
-      expect(matcher.name).toEqual("toMatch");
-    });
-
     it("passes when RegExps are equivalent", function() {
       var matcher = jasmine.coreMatchers.toMatch,
         result;
@@ -540,13 +453,6 @@ describe("jasmine.coreMatchers", function() {
   });
 
   describe("toThrow", function() {
-
-    it("has the correct name", function() {
-      var matcher = jasmine.coreMatchers.toThrow;
-
-      expect(matcher.name).toEqual("toThrow");
-    });
-
     it("throw an error when the acutal is not a function ", function() {
       var matcher = jasmine.coreMatchers.toThrow;
 

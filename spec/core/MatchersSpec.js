@@ -1,3 +1,37 @@
+describe("Matchers", function() {
+  describe("buildMessage", function() {
+
+    it("builds an English sentence for a failure case", function() {
+      var matchers = new jasmine.Matchers(),
+        actual = "foo",
+        name = "toBar",
+        message = matchers.buildFailureMessage(name, false, actual);
+
+      expect(message).toEqual("Expected 'foo' to bar.");
+    });
+
+    it("builds an English sentence for a 'not' failure case", function() {
+      var matchers = new jasmine.Matchers(),
+        actual = "foo",
+        name = "toBar",
+        isNot = true,
+        message = matchers.buildFailureMessage(name, isNot, actual);
+
+      expect(message).toEqual("Expected 'foo' not to bar.");
+    });
+
+    it("builds an English sentence for an arbitrary array of expected arguments", function(){
+      var matchers = new jasmine.Matchers(),
+        actual = "foo",
+        name = "toBar",
+        message = matchers.buildFailureMessage(name, false, actual, "quux", "corge");
+
+      expect(message).toEqual("Expected 'foo' to bar 'quux', 'corge'.");
+    });
+  });
+});
+
+
 xdescribe("jasmine.Matchers (integration/old tests)", function() {
   var env, spec;
 
