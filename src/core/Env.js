@@ -29,18 +29,14 @@
     this.nextSpecId_ = 0;
     this.nextSuiteId_ = 0;
 
-    // wrap matchers
-    this.matchersClass = function() {
-      jasmine.Matchers.apply(this, arguments);
-    };
-    jasmine.util.inherit(this.matchersClass, jasmine.Matchers);
-
-    jasmine.Matchers.wrapInto_(jasmine.Matchers.prototype, this.matchersClass);
+    jasmine.Expectation.addMatchers(jasmine.matchers);
 
     var expectationFactory = function(actual, spec) {
-      var expect = new (self.matchersClass)(self, actual, spec);
-      expect.not = new (self.matchersClass)(self, actual, spec, true);
-      return expect;
+      return jasmine.Expectation.Factory({
+        util: jasmine.matchersUtil,
+        actual: actual,
+        addExpectationResult: spec.addExpectationResult
+      });
     };
 
     var specStarted = function(spec) {

@@ -1,9 +1,3 @@
-// at this point Matchers is dead code.
-//
-// KILL IT
-// matchers becomes the built-in matchers
-// pass in util (!) and matchers (?) to compare
-
 describe("matchersUtil", function() {
   describe("equals", function() {
     it("passes for literals that are threequal", function() {
