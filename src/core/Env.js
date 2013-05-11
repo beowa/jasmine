@@ -8,8 +8,8 @@
 
     this.clock = new jasmine.Clock(global, new jasmine.DelayedFunctionScheduler());
 
-    this.jasmine = jasmine;
-    this.spies_ = [];
+    this.jasmine = jasmine; // TODO: used?
+    this.spies_ = []; // TODO: used?
     this.currentSpec = null;
 
     this.reporter = new jasmine.ReportDispatcher([

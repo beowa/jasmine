@@ -1,7 +1,7 @@
 describe("Core Matchers", function() {
   describe("toEqual", function() {
     it("passes for literals that are threequal", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare(null, null);
@@ -12,7 +12,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes with a custom not failure message", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare(1, 1);
@@ -20,7 +20,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for things that are not equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare({a: "foo"}, 1);
@@ -29,7 +29,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes for Strings that are equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare("foo", "foo");
@@ -38,7 +38,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for Strings that are not equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare("foo", "bar");
@@ -47,7 +47,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes for Numbers that are equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare(123, 123);
@@ -56,7 +56,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for Numbers that are not equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare(123, 456);
@@ -65,7 +65,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes for Dates that are equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare(new Date("Jan 1, 1970"), new Date("Jan 1, 1970"));
@@ -75,7 +75,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for Dates that are not equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare(new Date("Jan 1, 1970"), new Date("Feb 3, 1991"));
@@ -86,7 +86,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes for Booleans that are equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare(true, true);
@@ -95,7 +95,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for Booleans that are not equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare(true, false);
@@ -104,7 +104,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes for RegExps that are equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare(/foo/, /foo/);
@@ -113,7 +113,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for RegExps that are not equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare(/foo/, /bar/);
@@ -126,7 +126,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes for Arrays that are equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare([1, 2], [1, 2]);
@@ -135,7 +135,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for Arrays that are not equivalent", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare([1, 2], [1, 2, 3]);
@@ -144,7 +144,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes for Objects that are equivalent (simple case)", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare({a: "foo"}, {a: "foo"});
@@ -153,7 +153,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for Objects that are not equivalent (simple case)", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare({a: "foo"}, {a: "bar"});
@@ -162,7 +162,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes for Objects that are equivalent (deep case)", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare({a: "foo", b: { c: "bar"}}, {a: "foo", b: { c: "bar"}});
@@ -171,7 +171,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for Objects that are not equivalent (deep case)", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       result = matcher.compare({a: "foo", b: { c: "baz"}}, {a: "foo", b: { c: "bar"}});
@@ -180,7 +180,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes for Objects that are equivalent (with cycles)", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       var actual = { a: "foo" },
@@ -195,7 +195,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for Objects that are not equivalent (with cycles)", function() {
-      var matcher = jasmine.coreMatchers.toEqual,
+      var matcher = jasmine.matchers.toEqual(),
         result;
 
       var actual = { a: "foo" },
@@ -207,6 +207,26 @@ describe("Core Matchers", function() {
       result = matcher.compare(actual, expected);
       expect(result.pass).toBe(false);
       expect(result.message).toEqual("Expected { a : 'foo', b : <circular reference: Object> } to equal { a : 'bar', b : { a : 'foo', b : <circular reference: Object> } }.");
+    });
+
+    it("passes when a custom equality matcher returns true", function() {
+      var matcher = jasmine.matchers.toEqual(),
+        result;
+
+      matcher.addTester(function(a, b) { return true });
+
+      result = matcher.compare(1, 2);
+      expect(result.pass).toBe(true);
+    });
+
+    it("fails for equivalents when a custom equality matcher returns false", function() {
+      var matcher = jasmine.matchers.toEqual(),
+        result;
+
+      matcher.addTester(function(a, b) { return false });
+
+      result = matcher.compare(1, 2);
+      expect(result.pass).toBe(false);
     });
   });
 });

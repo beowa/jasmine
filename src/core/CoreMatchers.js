@@ -1,240 +1,19 @@
-jasmine.coreMatchers = (function() {
-  return {
-    toBe: {
-      compare: function(actual, expected) {
-        return {
-          pass: actual === expected
-        };
-      }
-    },
+jasmine.matchers = {};
+jasmine.matchers.equals = function(a, b, customTesters) {
 
-    toBeCloseTo: {
-      compare: function(actual, expected, precision) {
-        if (precision !== 0) {
-          precision = precision || 2;
-        }
-
-        return {
-          pass: Math.abs(expected - actual) < (Math.pow(10, -precision) / 2)
-        };
-      }
-    },
-
-    toBeDefined: {
-      compare: function(actual) {
-        return {
-          pass: !jasmine.util.isUndefined(actual)
-        };
-      }
-    },
-
-    toBeFalsy: {
-      compare: function(actual) {
-        return {
-          pass: !!!actual
-        };
-      }
-    },
-
-    toBeGreaterThan: {
-      compare: function(actual, expected) {
-        return {
-          pass: actual > expected
-        };
-      }
-    },
-
-    toBeLessThan: {
-      compare: function(actual, expected) {
-        return {
-          pass: actual < expected
-        };
-      }
-    },
-
-    toBeNaN: {
-      compare: function(actual) {
-        var result = {
-          pass: (actual !== actual)
-        };
-
-        if (result.pass) {
-          result.message = "Expected actual not to be NaN."
-        } else {
-          result.message = "Expected " + jasmine.pp(actual) + " to be NaN."
-        }
-
-        return result;
-      }
-    },
-
-    toBeNull: {
-      compare: function(actual) {
-        return {
-          pass: actual === null
-        };
-      }
-    },
-
-    toBeTruthy: {
-      compare: function(actual) {
-        return {
-          pass: !!actual
-        };
-      }
-    },
-
-    toBeUndefined: {
-      compare: function(actual) {
-        return {
-          pass: void 0 === actual
-        };
-      }
-    },
-
-    toContain: {
-      compare: function(actual, expected) {
-
-        return {
-          pass: contains(actual, expected)
-        };
-      }
-    },
-
-    toEqual: {
-      compare: function(actual, expected) {
-        var result = {
-          pass: false,
-          message: {}
-        };
-
-        result.pass = eq(actual, expected, [], []);
-
-        // TODO: this might be fine with the default message
-        result.message = result.pass ?
-          "Expected " + jasmine.pp(actual) + " not to equal " + jasmine.pp(expected) + "." :
-          "Expected " + jasmine.pp(actual) + " to equal " + jasmine.pp(expected) + ".";
-
-        return result;
-      }
-    },
-
-    toHaveBeenCalled: {
-      compare: function(actual) {
-        var result = {};
-
-        if (!jasmine.isSpy(actual)) {
-          throw new Error('Expected a spy, but got ' + jasmine.pp(actual) + '.');
-        }
-
-        if (arguments.length > 1) {
-          throw new Error('toHaveBeenCalled does not take arguments, use toHaveBeenCalledWith');
-        }
-
-        result.pass = actual.wasCalled;
-
-        result.message = result.pass ?
-          "Expected spy " + actual.identity + " not to have been called." :
-          "Expected spy " + actual.identity + " to have been called.";
-
-        return result;
-      }
-    },
-
-    toHaveBeenCalledWith: {
-      compare: function() {
-        var args = Array.prototype.slice.call(arguments, 0),
-          actual = args[0],
-          expectedArgs = args.slice(1);
-
-        if (!jasmine.isSpy(actual)) {
-          throw new Error('Expected a spy, but got ' + jasmine.pp(actual) + '.');
-        }
-
-        return {
-          pass: contains(actual.argsForCall, expectedArgs)
-        };
-      },
-      message: function(actual) {
-        return {
-          affirmative: "Expected spy " + actual.identity + " to have been called.",
-          negative: "Expected spy " + actual.identity + " not to have been called."
-        };
-      }
-    },
-
-    toMatch: {
-      compare: function(actual, expected) {
-        var regexp = new RegExp(expected);
-
-        return {
-          pass: regexp.test(actual)
-        };
-      }
-    },
-
-    toThrow: {
-      compare: function(actual, expected) {
-        var result = { pass: false },
-          exception;
-
-        if (typeof actual != "function") {
-          throw new Error("Actual is not a Function");
-        }
-
-        if (expectedCannotBeTreatedAsException()) {
-          throw new Error("Expected cannot be treated as an exception.");
-        }
-
-        try {
-          actual();
-        } catch (e) {
-          exception = new Error(e);
-        }
-
-        if (!exception) {
-          result.message = "Expected function to throw an exception.";
-          return result;
-        }
-
-        if (void 0 == expected) {
-          result.pass = true;
-          result.message = "Expected function not to throw an exception.";
-        } else if (exception.message == expected) {
-          result.pass = true;
-          result.message = "Expected function not to throw an exception \"" + expected + "\".";
-        } else if (exception.message == expected.message) {
-          result.pass = true;
-          result.message = "Expected function not to throw an exception \"" + expected.message + "\".";
-        } else if (expected instanceof RegExp) {
-          if (expected.test(exception.message)) {
-            result.pass = true;
-            result.message = "Expected function not to throw an exception matching " + expected + ".";
-          } else {
-            result.pass = false;
-            result.message = "Expected function to throw an exception matching " + expected + ".";
-          }
-        } else {
-          result.pass = false;
-          result.message = "Expected function to throw an exception \"" + (expected.message || expected) + "\"."
-        }
-
-        return result;
-
-        function expectedCannotBeTreatedAsException() {
-          return !(
-            (void 0 == expected) ||
-              (expected instanceof Error) ||
-              (typeof expected == "string") ||
-              (expected instanceof RegExp)
-            );
-        }
-      }
-    }
-  };
+  return eq(a, b, [], [], customTesters);
 
   // Equality function lovingly adapted from isEqual in [Underscore](http://underscorejs.org)
-  function eq(a, b, aStack, bStack) {
+  function eq(a, b, aStack, bStack, customTesters) {
+    var result = true;
+
+    for (var i = 0; i < customTesters.length; i++) {
+      result = customTesters[i](a, b);
+      if (result) {
+        return true;
+      }
+    }
+
     // Identical objects are equal. `0 === -0`, but they aren't identical.
     // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
     if (a === b) return a !== 0 || 1 / a == 1 / b;
@@ -277,7 +56,7 @@ jasmine.coreMatchers = (function() {
     // Add the first object to the stack of traversed objects.
     aStack.push(a);
     bStack.push(b);
-    var size = 0, result = true;
+    var size = 0;
     // Recursively compare objects and arrays.
     if (className == '[object Array]') {
       // Compare array lengths to determine if a deep comparison is necessary.
@@ -286,7 +65,7 @@ jasmine.coreMatchers = (function() {
       if (result) {
         // Deep compare the contents, ignoring non-numeric properties.
         while (size--) {
-          if (!(result = eq(a[size], b[size], aStack, bStack))) break;
+          if (!(result = eq(a[size], b[size], aStack, bStack, customTesters))) break;
         }
       }
     } else {
@@ -303,7 +82,7 @@ jasmine.coreMatchers = (function() {
           // Count the expected number of properties.
           size++;
           // Deep compare each member.
-          if (!(result = has(b, key) && eq(a[key], b[key], aStack, bStack))) break;
+          if (!(result = has(b, key) && eq(a[key], b[key], aStack, bStack, customTesters))) break;
         }
       }
       // Ensure that both objects contain the same number of properties.
@@ -328,16 +107,286 @@ jasmine.coreMatchers = (function() {
       return typeof obj === 'function';
     }
   }
+};
 
-  function contains(haystack, needle) {
-    if (Object.prototype.toString.apply(haystack) === "[object Array]") {
-      for (var i = 0; i < haystack.length; i++) {
-        if (eq(haystack[i], needle, [], [])) {
-          return true;
-        }
+jasmine.matchers.contains = function(haystack, needle) {
+  if (Object.prototype.toString.apply(haystack) === "[object Array]") {
+    for (var i = 0; i < haystack.length; i++) {
+      if (jasmine.matchers.equals(haystack[i], needle, [])) {
+        return true;
       }
-      return false;
     }
-    return haystack.indexOf(needle) >= 0;
+    return false;
   }
-}());
+  return haystack.indexOf(needle) >= 0;
+};
+
+jasmine.matchers.toBe = function() {
+  return {
+    compare: function(actual, expected) {
+      return {
+        pass: actual === expected
+      };
+    }
+  };
+};
+
+jasmine.matchers.toBeCloseTo = function() {
+  return {
+    compare: function(actual, expected, precision) {
+      if (precision !== 0) {
+        precision = precision || 2;
+      }
+
+      return {
+        pass: Math.abs(expected - actual) < (Math.pow(10, -precision) / 2)
+      };
+    }
+  };
+};
+
+jasmine.matchers.toBeDefined = function() {
+  return {
+    compare: function(actual) {
+      return {
+        pass: !jasmine.util.isUndefined(actual)
+      };
+    }
+  };
+};
+
+jasmine.matchers.toBeFalsy = function() {
+  return {
+    compare: function(actual) {
+      return {
+        pass: !!!actual
+      };
+    }
+  };
+};
+
+jasmine.matchers.toBeGreaterThan = function() {
+  return {
+    compare: function(actual, expected) {
+      return {
+        pass: actual > expected
+      };
+    }
+  };
+};
+
+jasmine.matchers.toBeLessThan = function() {
+  return {
+
+    compare: function(actual, expected) {
+      return {
+        pass: actual < expected
+      };
+    }
+  };
+};
+
+jasmine.matchers.toBeNaN = function() {
+  return {
+    compare: function(actual) {
+      var result = {
+        pass: (actual !== actual)
+      };
+
+      if (result.pass) {
+        result.message = "Expected actual not to be NaN."
+      } else {
+        result.message = "Expected " + jasmine.pp(actual) + " to be NaN."
+      }
+
+      return result;
+    }
+  };
+};
+
+jasmine.matchers.toBeNull = function() {
+  return {
+    compare: function(actual) {
+      return {
+        pass: actual === null
+      };
+    }
+  };
+};
+
+jasmine.matchers.toBeTruthy = function() {
+  return {
+    compare: function(actual) {
+      return {
+        pass: !!actual
+      };
+    }
+  };
+};
+
+jasmine.matchers.toBeUndefined = function() {
+  return {
+    compare: function(actual) {
+      return {
+        pass: void 0 === actual
+      };
+    }
+  };
+};
+
+jasmine.matchers.toEqual = function() {
+  var customEqualityTesters = [];
+
+  return {
+    compare: function(actual, expected) {
+      var result = {
+        pass: false,
+        message: {}
+      };
+
+      result.pass = jasmine.matchers.equals(actual, expected, customEqualityTesters);
+
+      // TODO: this might be fine with the default message
+      result.message = result.pass ?
+        "Expected " + jasmine.pp(actual) + " not to equal " + jasmine.pp(expected) + "." :
+        "Expected " + jasmine.pp(actual) + " to equal " + jasmine.pp(expected) + ".";
+
+      return result;
+    },
+    addTester: function(tester) {
+      customEqualityTesters.push(tester);
+    }
+  };
+};
+
+jasmine.matchers.toHaveBeenCalled = function() {
+  return {
+    compare: function(actual) {
+      var result = {};
+
+      if (!jasmine.isSpy(actual)) {
+        throw new Error('Expected a spy, but got ' + jasmine.pp(actual) + '.');
+      }
+
+      if (arguments.length > 1) {
+        throw new Error('toHaveBeenCalled does not take arguments, use toHaveBeenCalledWith');
+      }
+
+      result.pass = actual.wasCalled;
+
+      result.message = result.pass ?
+        "Expected spy " + actual.identity + " not to have been called." :
+        "Expected spy " + actual.identity + " to have been called.";
+
+      return result;
+    }
+  };
+};
+
+jasmine.matchers.toHaveBeenCalledWith = function() {
+  return {
+    compare: function() {
+      var args = Array.prototype.slice.call(arguments, 0),
+        actual = args[0],
+        expectedArgs = args.slice(1);
+
+      if (!jasmine.isSpy(actual)) {
+        throw new Error('Expected a spy, but got ' + jasmine.pp(actual) + '.');
+      }
+
+      return {
+        pass: jasmine.matchers.contains(actual.argsForCall, expectedArgs)
+      };
+    },
+    message: function(actual) {
+      return {
+        affirmative: "Expected spy " + actual.identity + " to have been called.",
+        negative: "Expected spy " + actual.identity + " not to have been called."
+      };
+    }
+  };
+};
+
+jasmine.matchers.toMatch = function() {
+  return {
+    compare: function(actual, expected) {
+      var regexp = new RegExp(expected);
+
+      return {
+        pass: regexp.test(actual)
+      };
+    }
+  };
+};
+
+jasmine.matchers.toThrow = function() {
+  return {
+    compare: function(actual, expected) {
+      var result = { pass: false },
+        exception;
+
+      if (typeof actual != "function") {
+        throw new Error("Actual is not a Function");
+      }
+
+      if (expectedCannotBeTreatedAsException()) {
+        throw new Error("Expected cannot be treated as an exception.");
+      }
+
+      try {
+        actual();
+      } catch (e) {
+        exception = new Error(e);
+      }
+
+      if (!exception) {
+        result.message = "Expected function to throw an exception.";
+        return result;
+      }
+
+      if (void 0 == expected) {
+        result.pass = true;
+        result.message = "Expected function not to throw an exception.";
+      } else if (exception.message == expected) {
+        result.pass = true;
+        result.message = "Expected function not to throw an exception \"" + expected + "\".";
+      } else if (exception.message == expected.message) {
+        result.pass = true;
+        result.message = "Expected function not to throw an exception \"" + expected.message + "\".";
+      } else if (expected instanceof RegExp) {
+        if (expected.test(exception.message)) {
+          result.pass = true;
+          result.message = "Expected function not to throw an exception matching " + expected + ".";
+        } else {
+          result.pass = false;
+          result.message = "Expected function to throw an exception matching " + expected + ".";
+        }
+      } else {
+        result.pass = false;
+        result.message = "Expected function to throw an exception \"" + (expected.message || expected) + "\"."
+      }
+
+      return result;
+
+      function expectedCannotBeTreatedAsException() {
+        return !(
+          (void 0 == expected) ||
+            (expected instanceof Error) ||
+            (typeof expected == "string") ||
+            (expected instanceof RegExp)
+          );
+      }
+    }
+  };
+};
+
+jasmine.matchers.toContain = function() {
+  return {
+    compare: function(actual, expected) {
+
+      return {
+        pass: jasmine.matchers.contains(actual, expected)
+      };
+    }
+  };
+};
