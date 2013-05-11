@@ -41,17 +41,17 @@ jasmine.Expectation.prototype.wrapCompare = function(name, matcherFactory) {
         passed: result.pass,
         message: message,
         actual: this.actual,
-        expected: expected // this needs to be arrayified/sliced
+        expected: expected // TODO: this may need to be arrayified/sliced
       }
     );
   };
 };
 
 jasmine.Expectation.addMatchers = function(matchers) {
-  var expecatationPrototype = jasmine.Expectation.prototype;
+  var prototype = jasmine.Expectation.prototype;
   for (var matcherName in matchers) {
     var matcher = matchers[matcherName];
-    expecatationPrototype[matcherName] = expecatationPrototype.wrapCompare(matcherName, matcher);
+    prototype[matcherName] = prototype.wrapCompare(matcherName, matcher);
   }
 };
 
@@ -59,7 +59,7 @@ jasmine.Expectation.Factory = function(options) {
   options = options || {};
   var expect = new jasmine.Expectation(options);
 
-  // TOD
+  // TODO: this would be nice as its own Object - NegativeExpectation
   options.isNot = true;
   expect.not = new jasmine.Expectation(options);
 

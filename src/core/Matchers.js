@@ -12,34 +12,6 @@ jasmine.Matchers = function(env, actual, spec, opt_isNot) {
   this.isNot = opt_isNot || false;
 };
 
-jasmine.Matchers.prototype.buildFailureMessage = function() {
-  var args = Array.prototype.slice.call(arguments, 0),
-    matcherName  = args[0],
-    isNot = args[1],
-    actual = args[2],
-    expected = args.slice(3),
-    englishyPredicate = matcherName.replace(/[A-Z]/g, function(s) { return ' ' + s.toLowerCase(); });
-
-  var message = "Expected " +
-    jasmine.pp(actual) +
-    (isNot ? " not " : " ") +
-    englishyPredicate;
-
-  if (expected.length > 0) {
-    for (var i = 0; i < expected.length; i++) {
-      if (i > 0) message += ",";
-      message += " " + jasmine.pp(expected[i]);
-    }
-  }
-
-  return message + ".";
-};
-
-
-// TODO: probably kill all of this below
-
-
-
 // todo: @deprecated as of Jasmine 0.11, remove soon [xw]
 jasmine.Matchers.pp = function(str) {
   throw new Error("jasmine.Matchers.pp() is no longer supported, please use jasmine.pp() instead!");

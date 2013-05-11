@@ -281,47 +281,37 @@ describe("Core Matchers", function() {
   });
 
   describe("toContain", function() {
-    it("passes when expected is a substring of actual", function() {
-      var matcher = jasmine.matchers.toContain(),
-        result;
+    it("delegates to jasmine.matchersUtil.contains", function() {
+      var util = {
+          contains: jasmine.createSpy('delegated-contains').andReturn(true)
+        },
+        matcher = jasmine.matchers.toContain(util);
 
       result = matcher.compare("ABC", "B");
+      expect(util.contains).toHaveBeenCalledWith("ABC", "B");
       expect(result.pass).toBe(true);
     });
+  });
 
-    it("fails when expected is a not substring of actual", function() {
-      var matcher = jasmine.matchers.toContain(),
+  describe("toEqual", function() {
+    it("delegates to equals function", function() {
+      var util = {
+          equals: jasmine.createSpy('delegated-equals').andReturn(true)
+        },
+        matcher = jasmine.matchers.toEqual(util),
         result;
 
-      result = matcher.compare("ABC", "X");
-      expect(result.pass).toBe(false);
-    });
+      result = matcher.compare(1, 1);
 
-    it("passes when expected is an element in an actual array", function() {
-      var matcher = jasmine.matchers.toContain(),
-        result;
-
-      result = matcher.compare(['foo', 'bar'], 'foo');
+      expect(util.equals).toHaveBeenCalledWith(1, 1, []);
       expect(result.pass).toBe(true);
-    });
 
-    it("fails when expected is not an element in an actual array", function() {
-      var matcher = jasmine.matchers.toContain(),
-        result;
+      util.equals.andReturn(false);
 
-      result = matcher.compare(['foo', 'bar'], 'baz');
+      result = matcher.compare(1, 2);
+
+      expect(util.equals).toHaveBeenCalledWith(1, 2, []);
       expect(result.pass).toBe(false);
-    });
-
-    it("passes with mixed-element arrays", function() {
-      var matcher = jasmine.matchers.toContain(),
-        result;
-
-      result = matcher.compare(["foo", {some: "bar"}], "foo");
-      expect(result.pass).toEqual(true);
-
-      result = matcher.compare(["foo", {some: "bar"}], {some: "bar"});
-      expect(result.pass).toEqual(true);
     });
   });
 
@@ -373,8 +363,11 @@ describe("Core Matchers", function() {
 
   describe("toHaveBeenCalledWith", function() {
     it("passes when the actual was called with matching parameters", function() {
-      var matcher = jasmine.matchers.toHaveBeenCalledWith(),
-        calledSpy = jasmine.createSpy('called-spy'),
+      var util = {
+          contains: jasmine.createSpy('delegated-contains').andReturn(true)
+        },
+        matcher = jasmine.matchers.toHaveBeenCalledWith(util)
+      calledSpy = jasmine.createSpy('called-spy'),
         result;
 
       calledSpy('a', 'b');
@@ -384,7 +377,10 @@ describe("Core Matchers", function() {
     });
 
     it("fails when the actual was not called", function() {
-      var matcher = jasmine.matchers.toHaveBeenCalledWith(),
+      var util = {
+          contains: jasmine.createSpy('delegated-contains').andReturn(false)
+        },
+        matcher = jasmine.matchers.toHaveBeenCalledWith(util),
         uncalledSpy = jasmine.createSpy('uncalled spy'),
         result;
 
@@ -393,7 +389,10 @@ describe("Core Matchers", function() {
     });
 
     it("fails when the actual was called with different parameters", function() {
-      var matcher = jasmine.matchers.toHaveBeenCalledWith(),
+      var util = {
+          contains: jasmine.createSpy('delegated-contains').andReturn(false)
+        },
+        matcher = jasmine.matchers.toHaveBeenCalledWith(util),
         calledSpy = jasmine.createSpy('called spy'),
         result;
 
@@ -413,7 +412,7 @@ describe("Core Matchers", function() {
     it("has a custom message on failure", function() {
       var matcher = jasmine.matchers.toHaveBeenCalledWith(),
         spy = jasmine.createSpy('sample-spy'),
-      messages = matcher.message(spy);
+        messages = matcher.message(spy);
 
       expect(messages.affirmative).toEqual("Expected spy sample-spy to have been called.")
       expect(messages.negative).toEqual("Expected spy sample-spy not to have been called.")

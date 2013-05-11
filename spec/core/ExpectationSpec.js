@@ -14,7 +14,7 @@ describe("Expectation", function() {
     expect(expectation.toBar).toBeDefined();
   });
 
-  it("Factory builds", function() {
+  it("Factory builds an expectaion/negative expectation", function() {
     var builtExpectation = jasmine.Expectation.Factory();
 
     expect(builtExpectation instanceof jasmine.Expectation).toBe(true)
