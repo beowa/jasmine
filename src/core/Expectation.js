@@ -60,11 +60,11 @@ function requireExpectation() {
   Expectation.Factory = function(options) {
     options = options || {};
 
-    var expect = new j$.Expectation(options);
+    var expect = new Expectation(options);
 
     // TODO: this would be nice as its own Object - NegativeExpectation
     options.isNot = true;
-    expect.not = new j$.Expectation(options);
+    expect.not = new Expectation(options);
 
     return expect;
   };

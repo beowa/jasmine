@@ -1,4 +1,4 @@
-function requireConsoleReporter(j$) {
+function requireConsoleReporter() {
   function ConsoleReporter(options) {
     var print = options.print,
       showColors = options.showColors || false,
@@ -118,5 +118,5 @@ function requireConsoleReporter(j$) {
     }
   }
 
-  j$.ConsoleReporter = ConsoleReporter;
+  return ConsoleReporter;
 }

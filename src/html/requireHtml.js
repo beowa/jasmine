@@ -1,6 +1,6 @@
-function defineHtml(jasmine) {
-  jasmine.HtmlReporter = requireHtmlReporter();
+function requireHtml(jasmine) {
+  jasmine.HtmlReporter = requireHtmlReporter(jasmine);
   jasmine.HtmlSpecFilter = requireHtmlSpecFilter();
   jasmine.QueryString = requireQueryString();
-  jasmine.ResultsNote = requireResultsNode();
+  jasmine.ResultsNode = requireResultsNode();
 }

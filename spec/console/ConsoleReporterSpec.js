@@ -1,7 +1,7 @@
 describe("ConsoleReporter", function() {
   var out;
 
-  requireConsoleReporter(j$); // TODO: temp as we fix self-test
+  requireConsole(j$); // TODO: temp as we fix self-test
 
   beforeEach(function() {
     out = (function() {

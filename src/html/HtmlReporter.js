@@ -1,4 +1,4 @@
-function requireHtmlReporter() {
+function requireHtmlReporter(j$) {
   function HtmlReporter(options) {
     var env = options.env || {},
       getContainer = options.getContainer,
@@ -38,6 +38,7 @@ function requireHtmlReporter() {
 
     var summary = createDom("div", {className: "summary"});
 
+    // TODO: should be injected
     var topResults = new j$.ResultsNode({}, "", null),
       currentParent = topResults;
 

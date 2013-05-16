@@ -1,3 +1,3 @@
 var j$ = requireCore();
-defineHtml(j$);
+requireHtml(j$);
 

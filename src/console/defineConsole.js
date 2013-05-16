@@ -1,3 +1,3 @@
-function defineConsole(jasmine) {
-  requireConsoleReporter(jasmine);
+function requireConsole(jasmine) {
+  jasmine.ConsoleReporter = requireConsoleReporter();
 }
