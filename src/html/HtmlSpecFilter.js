@@ -1,7 +1,12 @@
-jasmine.HtmlSpecFilter = function(options) {
-  var filterPattern = new RegExp(options && options.filterString());
+function requireHtmlSpecFilter() {
 
-  this.matches = function(specName) {
-    return filterPattern.test(specName);
-  };
-};
+  function HtmlSpecFilter(options) {
+    var filterPattern = new RegExp(options && options.filterString());
+
+    this.matches = function(specName) {
+      return filterPattern.test(specName);
+    };
+  }
+
+  return HtmlSpecFilter;
+}

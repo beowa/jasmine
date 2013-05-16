@@ -11,6 +11,7 @@ function license() {
 module.exports = {
   'jasmine-html': {
     src: [
+      'src/html/requireHtml.js',
       'src/html/HtmlReporter.js',
       'src/html/HtmlSpecFilter.js',
       'src/html/ResultsNode.js',
@@ -20,12 +21,15 @@ module.exports = {
   },
   jasmine: {
     src: [
+      'src/core/requireCore.js',
       'src/core/base.js',
       'src/core/util.js',
       'src/core/Spec.js',
       'src/core/Env.js',
       'src/core/JsApiReporter.js',
-      'src/core/Matchers',
+      'src/core/Any.js',
+      'src/core/ObjectContaining.js',
+      'src/core/CoreMatchers.js',
       'src/core/PrettyPrinter',
       'src/core/Suite',
       'src/core/**/*.js',

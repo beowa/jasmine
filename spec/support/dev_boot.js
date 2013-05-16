@@ -1,2 +1,3 @@
-var originalJasmine = jasmine;
-jasmine = null;
+var j$ = requireCore();
+defineHtml(j$);
+

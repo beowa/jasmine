@@ -2,7 +2,7 @@ xdescribe("MatchersSpec - HTML Dependent", function () {
   var env, spec;
 
   beforeEach(function() {
-    env = new jasmine.Env();
+    env = new j$.Env();
     env.updateInterval = 0;
 
     var suite = env.describe("suite", function() {

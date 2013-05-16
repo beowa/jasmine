@@ -1,7 +1,7 @@
 describe("Core Matchers", function() {
   describe("toBe", function() {
     it("passes when actual === expected", function() {
-      var matcher = jasmine.matchers.toBe(),
+      var matcher = j$.matchers.toBe(),
         result;
 
       result = matcher.compare(1, 1);
@@ -9,7 +9,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails when actual !== expected", function() {
-      var matcher = jasmine.matchers.toBe(),
+      var matcher = j$.matchers.toBe(),
         result;
 
       result = matcher.compare(1, 2);
@@ -19,7 +19,7 @@ describe("Core Matchers", function() {
 
   describe("toBeCloseTo", function() {
     it("passes when within two decimal places by default", function() {
-      var matcher = jasmine.matchers.toBeCloseTo(),
+      var matcher = j$.matchers.toBeCloseTo(),
         result;
 
       result = matcher.compare(0, 0);
@@ -30,7 +30,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails when not within two decimal places by default", function() {
-      var matcher = jasmine.matchers.toBeCloseTo(),
+      var matcher = j$.matchers.toBeCloseTo(),
         result;
 
       result = matcher.compare(0, 0.01);
@@ -38,7 +38,7 @@ describe("Core Matchers", function() {
     });
 
     it("accepts an optional precision argument", function() {
-      var matcher = jasmine.matchers.toBeCloseTo(),
+      var matcher = j$.matchers.toBeCloseTo(),
         result;
 
       result = matcher.compare(0, 0.1, 0);
@@ -49,7 +49,7 @@ describe("Core Matchers", function() {
     });
 
     it("rounds expected values", function() {
-      var matcher = jasmine.matchers.toBeCloseTo(),
+      var matcher = j$.matchers.toBeCloseTo(),
         result;
 
       result = matcher.compare(1.23, 1.229);
@@ -71,7 +71,7 @@ describe("Core Matchers", function() {
 
   describe("toBeDefined", function() {
     it("matches for defined values", function() {
-      var matcher = jasmine.matchers.toBeDefined(),
+      var matcher = j$.matchers.toBeDefined(),
         result;
 
 
@@ -80,7 +80,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails when matching undefined values", function() {
-      var matcher = jasmine.matchers.toBeDefined(),
+      var matcher = j$.matchers.toBeDefined(),
         result;
 
       result = matcher.compare(void 0);
@@ -90,7 +90,7 @@ describe("Core Matchers", function() {
 
   describe("toBeFalsy", function() {
     it("passes for 'falsy' values", function() {
-      var matcher = jasmine.matchers.toBeFalsy(),
+      var matcher = j$.matchers.toBeFalsy(),
         result;
 
       result = matcher.compare(false);
@@ -110,7 +110,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for 'truthy' values", function() {
-      var matcher = jasmine.matchers.toBeFalsy(),
+      var matcher = j$.matchers.toBeFalsy(),
         result;
 
       result = matcher.compare(true);
@@ -129,7 +129,7 @@ describe("Core Matchers", function() {
 
   describe("toBeGreaterThan", function() {
     it("passes when actual > expected", function() {
-      var matcher = jasmine.matchers.toBeGreaterThan(),
+      var matcher = j$.matchers.toBeGreaterThan(),
         result;
 
       result = matcher.compare(2, 1);
@@ -137,7 +137,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails when actual <= expected", function() {
-      var matcher = jasmine.matchers.toBeGreaterThan();
+      var matcher = j$.matchers.toBeGreaterThan();
 
       result = matcher.compare(1, 1);
       expect(result.pass).toBe(false);
@@ -149,7 +149,7 @@ describe("Core Matchers", function() {
 
   describe("toBeLessThan", function() {
     it("passes when actual < expected", function() {
-      var matcher = jasmine.matchers.toBeLessThan(),
+      var matcher = j$.matchers.toBeLessThan(),
         result;
 
       result = matcher.compare(1, 2);
@@ -157,7 +157,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails when actual <= expected", function() {
-      var matcher = jasmine.matchers.toBeLessThan(),
+      var matcher = j$.matchers.toBeLessThan(),
         result;
 
       result = matcher.compare(1, 1);
@@ -170,7 +170,7 @@ describe("Core Matchers", function() {
 
   describe("toBeNaN", function() {
     it("passes for NaN with a custom .not fail", function() {
-      var matcher = jasmine.matchers.toBeNaN(),
+      var matcher = j$.matchers.toBeNaN(),
         result;
 
       result = matcher.compare(Number.NaN);
@@ -179,7 +179,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for anything not a NaN", function() {
-      var matcher = jasmine.matchers.toBeNaN();
+      var matcher = j$.matchers.toBeNaN();
 
       result = matcher.compare(1);
       expect(result.pass).toBe(false);
@@ -198,7 +198,7 @@ describe("Core Matchers", function() {
     });
 
     it("has a custom message on failure", function() {
-      var matcher = jasmine.matchers.toBeNaN(),
+      var matcher = j$.matchers.toBeNaN(),
         result = matcher.compare(0);
 
       expect(result.message).toEqual("Expected 0 to be NaN.");
@@ -207,7 +207,7 @@ describe("Core Matchers", function() {
 
   describe("toBeNull", function() {
     it("passes for null", function() {
-      var matcher = jasmine.matchers.toBeNull(),
+      var matcher = j$.matchers.toBeNull(),
         result;
 
       result = matcher.compare(null);
@@ -215,7 +215,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for non-null", function() {
-      var matcher = jasmine.matchers.toBeNull(),
+      var matcher = j$.matchers.toBeNull(),
         result;
 
       result = matcher.compare('foo');
@@ -225,7 +225,7 @@ describe("Core Matchers", function() {
 
   describe("toBeTruthy", function() {
     it("passes for 'truthy' values", function() {
-      var matcher = jasmine.matchers.toBeTruthy(),
+      var matcher = j$.matchers.toBeTruthy(),
         result;
 
       result = matcher.compare(true);
@@ -242,7 +242,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails for 'falsy' values", function() {
-      var matcher = jasmine.matchers.toBeTruthy(),
+      var matcher = j$.matchers.toBeTruthy(),
         result;
 
       result = matcher.compare(false);
@@ -264,7 +264,7 @@ describe("Core Matchers", function() {
 
   describe("toBeUndefined", function() {
     it("passes for undefined values", function() {
-      var matcher = jasmine.matchers.toBeUndefined(),
+      var matcher = j$.matchers.toBeUndefined(),
         result;
 
       result = matcher.compare(void 0);
@@ -273,7 +273,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails when matching defined values", function() {
-      var matcher = jasmine.matchers.toBeUndefined();
+      var matcher = j$.matchers.toBeUndefined();
 
       result = matcher.compare('foo');
       expect(result.pass).toBe(false);
@@ -281,11 +281,11 @@ describe("Core Matchers", function() {
   });
 
   describe("toContain", function() {
-    it("delegates to jasmine.matchersUtil.contains", function() {
+    it("delegates to j$.matchersUtil.contains", function() {
       var util = {
-          contains: jasmine.createSpy('delegated-contains').andReturn(true)
+          contains: j$.createSpy('delegated-contains').andReturn(true)
         },
-        matcher = jasmine.matchers.toContain(util);
+        matcher = j$.matchers.toContain(util);
 
       result = matcher.compare("ABC", "B");
       expect(util.contains).toHaveBeenCalledWith("ABC", "B");
@@ -296,9 +296,9 @@ describe("Core Matchers", function() {
   describe("toEqual", function() {
     it("delegates to equals function", function() {
       var util = {
-          equals: jasmine.createSpy('delegated-equals').andReturn(true)
+          equals: j$.createSpy('delegated-equals').andReturn(true)
         },
-        matcher = jasmine.matchers.toEqual(util),
+        matcher = j$.matchers.toEqual(util),
         result;
 
       result = matcher.compare(1, 1);
@@ -317,8 +317,8 @@ describe("Core Matchers", function() {
 
   describe("toHaveBeenCalled", function() {
     it("passes when the actual was called, with a custom .not fail message", function() {
-      var matcher = jasmine.matchers.toHaveBeenCalled(),
-        calledSpy = jasmine.createSpy('called-spy'),
+      var matcher = j$.matchers.toHaveBeenCalled(),
+        calledSpy = j$.createSpy('called-spy'),
         result;
 
       calledSpy();
@@ -329,30 +329,30 @@ describe("Core Matchers", function() {
     });
 
     it("fails when the actual was not called", function() {
-      var matcher = jasmine.matchers.toHaveBeenCalled(),
-        uncalledSpy = jasmine.createSpy('uncalled spy');
+      var matcher = j$.matchers.toHaveBeenCalled(),
+        uncalledSpy = j$.createSpy('uncalled spy');
 
       result = matcher.compare(uncalledSpy);
       expect(result.pass).toBe(false);
     });
 
     it("throws an exception when the actual is not a spy", function() {
-      var matcher = jasmine.matchers.toHaveBeenCalled(),
+      var matcher = j$.matchers.toHaveBeenCalled(),
         fn = function() {};
 
-      expect(function() { matcher.compare(fn) }).toThrow("Expected a spy, but got Function.");
+      expect(function() { matcher.compare(fn) }).toThrow(new Error("Expected a spy, but got Function."));
     });
 
     it("throws an exception when invoked with any arguments", function() {
-      var matcher = jasmine.matchers.toHaveBeenCalled(),
-        spy = jasmine.createSpy('sample spy');
+      var matcher = j$.matchers.toHaveBeenCalled(),
+        spy = j$.createSpy('sample spy');
 
-      expect(function() { matcher.compare(spy, 'foo') }).toThrow("toHaveBeenCalled does not take arguments, use toHaveBeenCalledWith");
+      expect(function() { matcher.compare(spy, 'foo') }).toThrow(new Error("toHaveBeenCalled does not take arguments, use toHaveBeenCalledWith"));
     });
 
     it("has a custom message on failure", function() {
-      var matcher = jasmine.matchers.toHaveBeenCalled(),
-        spy = jasmine.createSpy('sample-spy'),
+      var matcher = j$.matchers.toHaveBeenCalled(),
+        spy = j$.createSpy('sample-spy'),
         result;
 
       result = matcher.compare(spy);
@@ -364,10 +364,10 @@ describe("Core Matchers", function() {
   describe("toHaveBeenCalledWith", function() {
     it("passes when the actual was called with matching parameters", function() {
       var util = {
-          contains: jasmine.createSpy('delegated-contains').andReturn(true)
+          contains: j$.createSpy('delegated-contains').andReturn(true)
         },
-        matcher = jasmine.matchers.toHaveBeenCalledWith(util)
-      calledSpy = jasmine.createSpy('called-spy'),
+        matcher = j$.matchers.toHaveBeenCalledWith(util)
+      calledSpy = j$.createSpy('called-spy'),
         result;
 
       calledSpy('a', 'b');
@@ -378,10 +378,10 @@ describe("Core Matchers", function() {
 
     it("fails when the actual was not called", function() {
       var util = {
-          contains: jasmine.createSpy('delegated-contains').andReturn(false)
+          contains: j$.createSpy('delegated-contains').andReturn(false)
         },
-        matcher = jasmine.matchers.toHaveBeenCalledWith(util),
-        uncalledSpy = jasmine.createSpy('uncalled spy'),
+        matcher = j$.matchers.toHaveBeenCalledWith(util),
+        uncalledSpy = j$.createSpy('uncalled spy'),
         result;
 
       result = matcher.compare(uncalledSpy);
@@ -390,10 +390,10 @@ describe("Core Matchers", function() {
 
     it("fails when the actual was called with different parameters", function() {
       var util = {
-          contains: jasmine.createSpy('delegated-contains').andReturn(false)
+          contains: j$.createSpy('delegated-contains').andReturn(false)
         },
-        matcher = jasmine.matchers.toHaveBeenCalledWith(util),
-        calledSpy = jasmine.createSpy('called spy'),
+        matcher = j$.matchers.toHaveBeenCalledWith(util),
+        calledSpy = j$.createSpy('called spy'),
         result;
 
       calledSpy('a');
@@ -403,15 +403,15 @@ describe("Core Matchers", function() {
     });
 
     it("throws an exception when the actual is not a spy", function() {
-      var matcher = jasmine.matchers.toHaveBeenCalledWith(),
+      var matcher = j$.matchers.toHaveBeenCalledWith(),
         fn = function() {};
 
-      expect(function() { matcher.compare(fn) }).toThrow("Expected a spy, but got Function.");
+      expect(function() { matcher.compare(fn) }).toThrow(new Error("Expected a spy, but got Function."));
     });
 
     it("has a custom message on failure", function() {
-      var matcher = jasmine.matchers.toHaveBeenCalledWith(),
-        spy = jasmine.createSpy('sample-spy'),
+      var matcher = j$.matchers.toHaveBeenCalledWith(),
+        spy = j$.createSpy('sample-spy'),
         messages = matcher.message(spy);
 
       expect(messages.affirmative).toEqual("Expected spy sample-spy to have been called.")
@@ -421,7 +421,7 @@ describe("Core Matchers", function() {
 
   describe("toMatch", function() {
     it("passes when RegExps are equivalent", function() {
-      var matcher = jasmine.matchers.toMatch(),
+      var matcher = j$.matchers.toMatch(),
         result;
 
       result = matcher.compare(/foo/, /foo/);
@@ -429,7 +429,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails when RegExps are not equivalent", function() {
-      var matcher = jasmine.matchers.toMatch(),
+      var matcher = j$.matchers.toMatch(),
         result;
 
       result = matcher.compare(/bar/, /foo/);
@@ -437,7 +437,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes when the actual matches the expected string as a pattern", function() {
-      var matcher = jasmine.matchers.toMatch(),
+      var matcher = j$.matchers.toMatch(),
         result;
 
       result = matcher.compare('foosball', 'foo');
@@ -445,7 +445,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails when the actual matches the expected string as a pattern", function() {
-      var matcher = jasmine.matchers.toMatch(),
+      var matcher = j$.matchers.toMatch(),
         result;
 
       result = matcher.compare('bar', 'foo');
@@ -455,15 +455,15 @@ describe("Core Matchers", function() {
 
   describe("toThrow", function() {
     it("throw an error when the acutal is not a function ", function() {
-      var matcher = jasmine.matchers.toThrow();
+      var matcher = j$.matchers.toThrow();
 
       expect(function() {
         matcher.compare({});
-      }).toThrow("Actual is not a Function");
+      }).toThrow(new Error("Actual is not a Function"));
     });
 
     it("throws an error when the expected can't be turned into an exception", function() {
-      var matcher = jasmine.matchers.toThrow(),
+      var matcher = j$.matchers.toThrow(),
         fn = function() {
           throw "foo";
         },
@@ -471,11 +471,11 @@ describe("Core Matchers", function() {
 
       expect(function() {
         matcher.compare(fn, 1);
-      }).toThrow("Expected cannot be treated as an exception.");
+      }).toThrow(new Error("Expected cannot be treated as an exception."));
     });
 
     it("passes if the actual throws any exception", function() {
-      var matcher = jasmine.matchers.toThrow(),
+      var matcher = j$.matchers.toThrow(),
         fn = function() {
           throw "foo";
         },
@@ -488,7 +488,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails if the actual does not throw an exception", function() {
-      var matcher = jasmine.matchers.toThrow(),
+      var matcher = j$.matchers.toThrow(),
         fn = function() {
           return 0;
         },
@@ -501,7 +501,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes if the actual throws an exception with the expected message", function() {
-      var matcher = jasmine.matchers.toThrow(),
+      var matcher = j$.matchers.toThrow(),
         fn = function() {
           throw "foo";
         },
@@ -514,7 +514,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails if the actual throws an exception with a different message", function() {
-      var matcher = jasmine.matchers.toThrow(),
+      var matcher = j$.matchers.toThrow(),
         fn = function() {
           throw "foo";
         },
@@ -527,7 +527,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes if the actual throws an exception and matches the message of the expected exception", function() {
-      var matcher = jasmine.matchers.toThrow(),
+      var matcher = j$.matchers.toThrow(),
         fn = function() {
           throw "foo";
         },
@@ -540,7 +540,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails if the actual throws an exception and it does not match the message of the expected exception with a custom message", function() {
-      var matcher = jasmine.matchers.toThrow(),
+      var matcher = j$.matchers.toThrow(),
         fn = function() {
           throw "foo";
         },
@@ -553,7 +553,7 @@ describe("Core Matchers", function() {
     });
 
     it("passes if the actual throws an exception and the message matches the expected regular expression", function() {
-      var matcher = jasmine.matchers.toThrow(),
+      var matcher = j$.matchers.toThrow(),
         fn = function() {
           throw "a long message";
         },
@@ -566,7 +566,7 @@ describe("Core Matchers", function() {
     });
 
     it("fails if the actual throws an exception and the message does not match the expected regular expression", function() {
-      var matcher = jasmine.matchers.toThrow(),
+      var matcher = j$.matchers.toThrow(),
         fn = function() {
           throw "a long message";
         },
