@@ -18,7 +18,7 @@ describe("Env", function() {
     var fakeReporter;
 
     beforeEach(function() {
-      fakeReporter = originalJasmine.createSpyObj("fakeReporter", ["jasmineStarted"]);
+      fakeReporter = jasmine.createSpyObj("fakeReporter", ["jasmineStarted"]);
     });
 
     it("should allow reporters to be registered", function() {

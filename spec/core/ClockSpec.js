@@ -294,7 +294,7 @@ describe("Clock (acceptance)", function() {
 
   it("calls the global clearTimeout correctly when not installed", function () {
     var delayedFunctionScheduler = jasmine.createSpyObj('delayedFunctionScheduler', ['clearTimeout']),
-      global = originalJasmine.getGlobal(),
+      global = jasmine.getGlobal(),
       clock = new jasmine.Clock(global, delayedFunctionScheduler);
 
     expect(function() {
@@ -304,7 +304,7 @@ describe("Clock (acceptance)", function() {
 
   it("calls the global clearTimeout correctly when not installed", function () {
     var delayedFunctionScheduler = jasmine.createSpyObj('delayedFunctionScheduler', ['clearTimeout']),
-      global = originalJasmine.getGlobal(),
+      global = jasmine.getGlobal(),
       clock = new jasmine.Clock(global, delayedFunctionScheduler);
 
     expect(function() {

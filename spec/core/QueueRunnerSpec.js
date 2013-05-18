@@ -23,10 +23,10 @@ describe("QueueRunner", function() {
     //TODO: it would be nice if spy arity could match the fake, so we could do something like:
     //createSpy('asyncfn').andCallFake(function(done) {});
 
-    var onComplete = originalJasmine.createSpy('onComplete'),
-      beforeCallback = originalJasmine.createSpy('beforeCallback'),
-      fnCallback = originalJasmine.createSpy('fnCallback'),
-      afterCallback = originalJasmine.createSpy('afterCallback'),
+    var onComplete = jasmine.createSpy('onComplete'),
+      beforeCallback = jasmine.createSpy('beforeCallback'),
+      fnCallback = jasmine.createSpy('fnCallback'),
+      afterCallback = jasmine.createSpy('afterCallback'),
       fn1 = function(done) {
         beforeCallback();
         setTimeout(function() {
