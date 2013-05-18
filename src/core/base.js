@@ -1,4 +1,5 @@
-var jasmine = {};
+var jasmine = {}; // TODO: this should die
+var jasmineRequire = {}; // TODO: this might die in favor of another file?
 
 // TODO: do we need this now that we have boot.js?
 if (typeof window == "undefined" && typeof exports == "object") {

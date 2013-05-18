@@ -93,6 +93,10 @@
       currentWindowOnload();
     }
     htmlReporter.initialize();
+
+    window.j$ = {}
+    jasmineRequire.console(j$);
+
     env.execute();
   };
 
