@@ -1,6 +1,6 @@
 describe("New HtmlReporter", function() {
   // TODO: Figure out why this isn't rendering...
-  xit("builds the initial DOM elements, including the title banner", function() {
+  it("builds the initial DOM elements, including the title banner", function() {
     var env = new jasmine.Env(),
       container = document.createElement("div"),
       getContainer = function() { return container; },
