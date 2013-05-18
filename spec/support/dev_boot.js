@@ -95,6 +95,7 @@
     htmlReporter.initialize();
 
     window.j$ = jasmineRequire.core();
+    jasmineRequire.html(j$);
     jasmineRequire.console(j$);
 
     env.execute();
