@@ -243,7 +243,7 @@ describe("Env (integration)", function() {
   });
 
   // TODO: something is wrong with this spec
-  xit("should report as expected", function() {
+  it("should report as expected", function() {
     var env = new j$.Env(),
       reporter = jasmine.createSpyObj('fakeReproter', [
         "jasmineStarted",
