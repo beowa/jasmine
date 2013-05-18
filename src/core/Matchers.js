@@ -265,7 +265,7 @@ jasmineRequire.Matchers = function(j$) {
   };
 
   Matchers.Any.prototype.jasmineToString = function() {
-    return '<j$.any(' + this.expectedClass + ')>';
+    return '<jasmine.any(' + this.expectedClass + ')>';
   };
 
   Matchers.ObjectContaining = function(sample) {
@@ -295,7 +295,7 @@ jasmineRequire.Matchers = function(j$) {
   };
 
   Matchers.ObjectContaining.prototype.jasmineToString = function() {
-    return "<j$.objectContaining(" + j$.pp(this.sample) + ")>";
+    return "<jasmine.objectContaining(" + j$.pp(this.sample) + ")>";
   };
 
   return Matchers;

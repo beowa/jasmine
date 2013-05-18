@@ -1,1 +1,3 @@
-jasmine.version = "<%= version %>";
+jasmineRequire.version = function() {
+  return "<%= version %>";
+};

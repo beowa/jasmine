@@ -27,7 +27,7 @@ jasmineRequire.Spec = function() {
       status: this.status(),
       failedExpectations: []
     };
-  };
+  }
 
   Spec.prototype.addExpectationResult = function(passed, data) {
     this.encounteredExpectations = true;

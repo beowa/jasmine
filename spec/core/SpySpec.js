@@ -1,7 +1,7 @@
 describe('Spies', function () {
   var env;
   beforeEach(function() {
-    env = new jasmine.Env();
+    env = new j$.Env();
   });
 
   it('should replace the specified function with a spy object', function() {
@@ -133,7 +133,7 @@ describe('Spies', function () {
 
   it('is torn down when env.removeAllSpies is called', function() {
     var originalFunctionWasCalled = false,
-    env = new jasmine.Env(),
+    env = new j$.Env(),
     TestClass = {
       someFunction: function() {
         originalFunctionWasCalled = true;
@@ -151,7 +151,7 @@ describe('Spies', function () {
   });
 
   it('calls removeAllSpies during spec finish', function() {
-    var env = new jasmine.Env(),
+    var env = new j$.Env(),
     originalFoo = function() {},
     testObj = {
       foo: originalFoo
