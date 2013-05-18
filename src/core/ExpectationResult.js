@@ -1,5 +1,5 @@
 //TODO: expectation result may make more sense as a presentation of an expectation.
-jasmineRequire.buildExpectationResult = function(j$) {
+jasmineRequire.buildExpectationResult = function() {
   function buildExpectationResult(options) {
     var messageFormatter = options.messageFormatter || function() {},
       stackFormatter = options.stackFormatter || function() {};

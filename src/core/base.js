@@ -1,5 +1,3 @@
-var jasmineRequire = {}; // TODO: this might die in favor of another file?
-
 jasmineRequire.base = function(j$) {
 
   // TODO: do we need this now that we have boot.js?

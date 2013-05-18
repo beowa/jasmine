@@ -4,7 +4,7 @@ describe("jasmine spec running", function () {
   var fakeTimer;
 
   beforeEach(function() {
-    env = new jasmine.Env();
+    env = new j$.Env();
     env.updateInterval = 0;
   });
 
@@ -248,7 +248,7 @@ describe("jasmine spec running", function () {
   // TODO: is this useful? It doesn't catch syntax errors
   xit("should recover gracefully when there are errors in describe functions", function() {
     var specs = [];
-    var superSimpleReporter = new jasmine.Reporter();
+    var superSimpleReporter = new j$.Reporter();
     superSimpleReporter.reportSpecResults = function(result) {
       specs.push("Spec: " + result.fullName);
     };
