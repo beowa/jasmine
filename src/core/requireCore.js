@@ -18,5 +18,10 @@ jasmineRequire.core = function() {
   j$.Spec = jasmineRequire.Spec();
   j$.Suite = jasmineRequire.Suite();
   j$.version = jasmineRequire.version();
+
   return j$;
 };
+
+if (typeof exports == "object") {
+  exports.jasmineRequire = jasmineRequire;
+}

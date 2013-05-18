@@ -2,10 +2,9 @@ var fs = require('fs');
 var util = require('util');
 var path = require('path');
 
-var jasmineGlobals = require('../lib/jasmine-core/jasmine.js');
-for (var k in jasmineGlobals) {
-  global[k] = jasmineGlobals[k];
-}
+var coreGlobals = require('../lib/jasmine-core/jasmine.js');
+var jasmine = coreGlobals.jasmineRequire.core();
+
 var env = jasmine.getEnv();
 
 var jasmineInterface = {
@@ -58,7 +57,8 @@ for (var k in jasmineInterface) {
   global[k] = jasmineInterface[k];
 }
 
-require('../src/console/ConsoleReporter.js');
+var console = require('../src/console/console.js');
+console.jasmineRequire.console(jasmine);
 
 /*
  Pulling in code from jasmine-node.
