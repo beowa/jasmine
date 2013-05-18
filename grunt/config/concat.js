@@ -39,6 +39,13 @@ module.exports = {
     src: ['lib/jasmine-core/boot/boot.js'],
     dest: 'lib/jasmine-core/boot.js'
   },
+  console: {
+    src: [
+      'src/console/requireConsole.js',
+      'src/console/ConsoleReporter.js'
+    ],
+    dest: 'src/console/console.js'
+  },
   options: {
     banner: license(),
     process: {

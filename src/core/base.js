@@ -1,10 +1,4 @@
 jasmineRequire.base = function(j$) {
-
-  // TODO: do we need this now that we have boot.js?
-  if (typeof window == "undefined" && typeof exports == "object") {
-    exports.jasmine = jasmine;
-  }
-
   j$.unimplementedMethod_ = function() {
     throw new Error("unimplemented method");
   };

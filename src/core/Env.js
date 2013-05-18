@@ -8,7 +8,6 @@ jasmineRequire.Env = function(j$) {
 
     this.clock = new j$.Clock(global, new j$.DelayedFunctionScheduler());
 
-    this.jasmine = jasmine;
     this.spies_ = [];
     this.currentSpec = null;
 
