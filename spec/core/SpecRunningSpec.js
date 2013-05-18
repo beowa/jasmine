@@ -221,7 +221,7 @@ describe("jasmine spec running", function () {
   });
 
   it("shouldn't run disabled suites", function() {
-    var specInADisabledSuite = originalJasmine.createSpy("specInADisabledSuite"),
+    var specInADisabledSuite = jasmine.createSpy("specInADisabledSuite"),
     suite = env.describe('A Suite', function() {
       env.xdescribe('with a disabled suite', function(){
         env.it('spec inside a disabled suite', specInADisabledSuite);

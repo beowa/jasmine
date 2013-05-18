@@ -37,7 +37,7 @@ describe("Spec", function() {
   it("should call the start callback on execution", function() {
     var fakeQueueRunner = jasmine.createSpy('fakeQueueRunner'),
       beforesWereCalled = false,
-      startCallback = originalJasmine.createSpy('startCallback'),
+      startCallback = jasmine.createSpy('startCallback'),
       spec = new jasmine.Spec({
         id: 123,
         description: 'foo bar',
@@ -54,7 +54,7 @@ describe("Spec", function() {
   it("should call the start callback on execution but before any befores are called", function() {
     var fakeQueueRunner = jasmine.createSpy('fakeQueueRunner'),
       beforesWereCalled = false,
-      startCallback = originalJasmine.createSpy('start-callback').andCallFake(function() {
+      startCallback = jasmine.createSpy('start-callback').andCallFake(function() {
         expect(beforesWereCalled).toBe(false);
       }),
       spec = new jasmine.Spec({
@@ -75,9 +75,9 @@ describe("Spec", function() {
 
   it("provides all before fns and after fns to be run", function() {
     var fakeQueueRunner = jasmine.createSpy('fakeQueueRunner'),
-      before = originalJasmine.createSpy('before'),
-      after = originalJasmine.createSpy('after'),
-      fn = originalJasmine.createSpy('test body').andCallFake(function() {
+      before = jasmine.createSpy('before'),
+      after = jasmine.createSpy('after'),
+      fn = jasmine.createSpy('test body').andCallFake(function() {
         expect(before).toHaveBeenCalled();
         expect(after).not.toHaveBeenCalled();
       }),
@@ -101,8 +101,8 @@ describe("Spec", function() {
   it("is marked pending if created without a function body", function() {
     var fakeQueueRunner = jasmine.createSpy('fakeQueueRunner'),
 
-      startCallback = originalJasmine.createSpy('startCallback'),
-      resultCallback = originalJasmine.createSpy('resultCallback'),
+      startCallback = jasmine.createSpy('startCallback'),
+      resultCallback = jasmine.createSpy('resultCallback'),
       spec = new jasmine.Spec({
         onStart: startCallback,
         fn: null,
@@ -116,9 +116,9 @@ describe("Spec", function() {
 
   it("can be disabled, but still calls callbacks", function() {
     var fakeQueueRunner = jasmine.createSpy('fakeQueueRunner'),
-      startCallback = originalJasmine.createSpy('startCallback'),
-      specBody = originalJasmine.createSpy('specBody'),
-      resultCallback = originalJasmine.createSpy('resultCallback'),
+      startCallback = jasmine.createSpy('startCallback'),
+      specBody = jasmine.createSpy('specBody'),
+      resultCallback = jasmine.createSpy('resultCallback'),
       spec = new jasmine.Spec({
         onStart:startCallback,
         fn: specBody,
@@ -141,8 +141,8 @@ describe("Spec", function() {
 
   it("can be marked pending, but still calls callbacks when executed", function() {
     var fakeQueueRunner = jasmine.createSpy('fakeQueueRunner'),
-      startCallback = originalJasmine.createSpy('startCallback'),
-      resultCallback = originalJasmine.createSpy('resultCallback'),
+      startCallback = jasmine.createSpy('startCallback'),
+      resultCallback = jasmine.createSpy('resultCallback'),
       spec = new jasmine.Spec({
         onStart: startCallback,
         resultCallback: resultCallback,
@@ -172,7 +172,7 @@ describe("Spec", function() {
   });
 
   it("should call the done callback on execution complete", function() {
-    var done = originalJasmine.createSpy('done callback'),
+    var done = jasmine.createSpy('done callback'),
       spec = new jasmine.Spec({
         fn: function() {},
         catchExceptions: function() { return false; },
