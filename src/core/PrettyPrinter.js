@@ -1,4 +1,4 @@
-jasmineRequire.StringPrettyPrinter = function(j$) {
+getJasmineRequireObj().StringPrettyPrinter = function(j$) {
 
   function PrettyPrinter() {
     this.ppNestLevel_ = 0;

@@ -1,4 +1,4 @@
-jasmineRequire.DelayedFunctionScheduler = function() {
+getJasmineRequireObj().DelayedFunctionScheduler = function() {
   function DelayedFunctionScheduler() {
     var self = this;
     var scheduledFunctions = {};
@@ -38,8 +38,7 @@ jasmineRequire.DelayedFunctionScheduler = function() {
 
     return self;
 
-
-    //finds/dupes functions within range and removes them.
+    // finds/dupes functions within range and removes them.
     function functionsWithinRange(startMillis, endMillis) {
       var fnsToRun = [];
       for (var timeoutKey in scheduledFunctions) {
@@ -47,7 +46,8 @@ jasmineRequire.DelayedFunctionScheduler = function() {
         if (scheduledFunc &&
           scheduledFunc.runAtMillis >= startMillis &&
           scheduledFunc.runAtMillis <= endMillis) {
-          //remove fn -- we'll reschedule later if it is recurring.
+
+          // remove fn -- we'll reschedule later if it is recurring.
           self.removeFunctionWithId(timeoutKey);
           if (!scheduledFunc.recurring) {
             fnsToRun.push(scheduledFunc); // schedules each function only once

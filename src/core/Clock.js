@@ -1,4 +1,4 @@
-jasmineRequire.Clock = function() {
+getJasmineRequireObj().Clock = function() {
   function Clock(global, delayedFunctionScheduler) {
     var self = this,
       realTimingFunctions = {

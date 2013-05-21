@@ -1,4 +1,4 @@
-jasmineRequire.util = function() {
+getJasmineRequireObj().util = function() {
 
   var util = {};
 

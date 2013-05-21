@@ -20,17 +20,20 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-var jasmineRequire = jasmineRequire || {};
-
-jasmineRequire.console = function(j$) {
-  j$.ConsoleReporter = jasmineRequire.ConsoleReporter();
-};
-
-if (typeof exports == "object") {
-  exports.jasmineRequire = jasmineRequire;
+function getJasmineRequireObj() {
+  if (typeof module !== "undefined" && module.exports) {
+    return exports;
+  } else {
+    window.jasmineRequire = window.jasmineRequire || {};
+    return window.jasmineRequire;
+  }
 }
 
-jasmineRequire.ConsoleReporter = function() {
+getJasmineRequireObj().console = function(jRequire, j$) {
+  j$.ConsoleReporter = jRequire.ConsoleReporter();
+};
+
+getJasmineRequireObj().ConsoleReporter = function() {
   function ConsoleReporter(options) {
     var print = options.print,
       showColors = options.showColors || false,

@@ -1,4 +1,4 @@
-jasmineRequire.QueueRunner = function() {
+getJasmineRequireObj().QueueRunner = function() {
 
   function QueueRunner(attrs) {
     this.fns = attrs.fns || [];

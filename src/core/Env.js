@@ -1,4 +1,4 @@
-jasmineRequire.Env = function(j$) {
+getJasmineRequireObj().Env = function(j$) {
   function Env(options) {
     options = options || {};
     var self = this;
