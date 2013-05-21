@@ -1,4 +1,4 @@
-jasmineRequire.Spec = function() {
+getJasmineRequireObj().Spec = function() {
   function Spec(attrs) {
     this.encounteredExpectations = false;
     this.expectationFactory = attrs.expectationFactory;
@@ -120,3 +120,7 @@ jasmineRequire.Spec = function() {
 
   return Spec;
 };
+
+if (typeof window == void 0 && typeof exports == "object") {
+  exports.Spec = jasmineRequire.Spec;
+}

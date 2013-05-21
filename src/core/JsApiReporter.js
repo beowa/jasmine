@@ -1,4 +1,4 @@
-jasmineRequire.JsApiReporter = function() {
+getJasmineRequireObj().JsApiReporter = function() {
   function JsApiReporter(jasmine) {  // TODO: this doesn't appear to be used
     this.jasmine = jasmine || {};
     this.started = false;

@@ -1,7 +1,7 @@
 // Jasmine boot.js for browser runners - exposes external/global interface, builds the Jasmine environment and executes it.
 (function() {
 
-  window.jasmine = jasmineRequire.core();
+  window.jasmine = jasmineRequire.core(jasmineRequire);
   jasmineRequire.html(jasmine);
 
   var env = jasmine.getEnv();
@@ -98,9 +98,11 @@
     }
     htmlReporter.initialize();
 
-    window.j$ = jasmineRequire.core();
+    // By the time onload is called, jasmineRequire will be redefined to point
+    //   to the Jasmine source files (and not jasmine.js). So re-require
+    window.j$ = jasmineRequire.core(jasmineRequire);
     jasmineRequire.html(j$);
-    jasmineRequire.console(j$);
+    jasmineRequire.console(jasmineRequire, j$);
 
     env.execute();
   };

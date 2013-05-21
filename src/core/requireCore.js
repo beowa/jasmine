@@ -1,27 +1,30 @@
-var jasmineRequire = jasmineRequire || {};
+function getJasmineRequireObj() {
+  if (typeof module !== "undefined" && module.exports) {
+    return exports;
+  } else {
+    window.jasmineRequire = window.jasmineRequire || {};
+    return window.jasmineRequire;
+  }
+}
 
-jasmineRequire.core = function() {
+getJasmineRequireObj().core = function(jRequire) {
   j$ = {};
 
-  jasmineRequire.base(j$);
-  j$.util = jasmineRequire.util();
-  j$.Clock = jasmineRequire.Clock();
-  j$.DelayedFunctionScheduler = jasmineRequire.DelayedFunctionScheduler();
-  j$.Env = jasmineRequire.Env(j$);
-  j$.ExceptionFormatter = jasmineRequire.ExceptionFormatter();
-  j$.buildExpectationResult = jasmineRequire.buildExpectationResult();
-  j$.JsApiReporter = jasmineRequire.JsApiReporter();
-  j$.Matchers = jasmineRequire.Matchers(j$);
-  j$.StringPrettyPrinter = jasmineRequire.StringPrettyPrinter(j$);
-  j$.QueueRunner = jasmineRequire.QueueRunner();
-  j$.ReportDispatcher = jasmineRequire.ReportDispatcher();
-  j$.Spec = jasmineRequire.Spec();
-  j$.Suite = jasmineRequire.Suite();
-  j$.version = jasmineRequire.version();
+  jRequire.base(j$);
+  j$.util = jRequire.util();
+  j$.Clock = jRequire.Clock();
+  j$.DelayedFunctionScheduler = jRequire.DelayedFunctionScheduler();
+  j$.Env = jRequire.Env(j$);
+  j$.ExceptionFormatter = jRequire.ExceptionFormatter();
+  j$.buildExpectationResult = jRequire.buildExpectationResult();
+  j$.JsApiReporter = jRequire.JsApiReporter();
+  j$.Matchers = jRequire.Matchers(j$);
+  j$.StringPrettyPrinter = jRequire.StringPrettyPrinter(j$);
+  j$.QueueRunner = jRequire.QueueRunner();
+  j$.ReportDispatcher = jRequire.ReportDispatcher();
+  j$.Spec = jRequire.Spec();
+  j$.Suite = jRequire.Suite();
+  j$.version = jRequire.version();
 
   return j$;
 };
-
-if (typeof exports == "object") {
-  exports.jasmineRequire = jasmineRequire;
-}

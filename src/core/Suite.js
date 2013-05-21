@@ -1,4 +1,4 @@
-jasmineRequire.Suite = function() {
+getJasmineRequireObj().Suite = function() {
   function Suite(attrs) {
     this.env = attrs.env;
     this.id = attrs.id;
@@ -101,3 +101,7 @@ jasmineRequire.Suite = function() {
   
   return Suite;
 };
+
+if (typeof window == void 0 && typeof exports == "object") {
+  exports.Suite = jasmineRequire.Suite;
+}

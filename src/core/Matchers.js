@@ -1,4 +1,4 @@
-jasmineRequire.Matchers = function(j$) {
+getJasmineRequireObj().Matchers = function(j$) {
   function Matchers(env, actual, spec, opt_isNot) {
     //TODO: true dependency: equals, contains
     this.env = env;

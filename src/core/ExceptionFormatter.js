@@ -1,4 +1,4 @@
-jasmineRequire.ExceptionFormatter = function() {
+getJasmineRequireObj().ExceptionFormatter = function() {
   function ExceptionFormatter() {
     this.message = function(error) {
       var message = error.name +

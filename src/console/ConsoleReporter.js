@@ -1,4 +1,4 @@
-jasmineRequire.ConsoleReporter = function() {
+getJasmineRequireObj().ConsoleReporter = function() {
   function ConsoleReporter(options) {
     var print = options.print,
       showColors = options.showColors || false,

@@ -1,4 +1,4 @@
-jasmineRequire.ReportDispatcher = function() {
+getJasmineRequireObj().ReportDispatcher = function() {
   function ReportDispatcher(methods) {
 
     var dispatchedMethods = methods || [];
@@ -32,3 +32,4 @@ jasmineRequire.ReportDispatcher = function() {
 
   return ReportDispatcher;
 };
+
