@@ -21,6 +21,7 @@ getJasmineRequireObj().core = function(jRequire) {
   j$.JsApiReporter = jRequire.JsApiReporter();
   j$.Matchers = jRequire.Matchers(j$);
   j$.matchers = jRequire.matchers(j$);
+  j$.matchersUtil = jRequire.matchersUtil(j$);
   j$.StringPrettyPrinter = jRequire.StringPrettyPrinter(j$);
   j$.QueueRunner = jRequire.QueueRunner();
   j$.ReportDispatcher = jRequire.ReportDispatcher();
