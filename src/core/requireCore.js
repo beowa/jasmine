@@ -16,6 +16,7 @@ getJasmineRequireObj().core = function(jRequire) {
   j$.DelayedFunctionScheduler = jRequire.DelayedFunctionScheduler();
   j$.Env = jRequire.Env(j$);
   j$.ExceptionFormatter = jRequire.ExceptionFormatter();
+  j$.Expectation = jRequire.Expectation();
   j$.buildExpectationResult = jRequire.buildExpectationResult();
   j$.JsApiReporter = jRequire.JsApiReporter();
   j$.Matchers = jRequire.Matchers(j$);
