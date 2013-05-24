@@ -30,17 +30,37 @@ getJasmineRequireObj().Env = function(j$) {
     this.equalityTesters_ = [];
 
     // wrap matchers
-    this.matchersClass = function() {
-      j$.Matchers.apply(this, arguments);
-    };
-    j$.util.inherit(this.matchersClass, j$.Matchers);
+//    this.matchersClass = function() {
+//      j$.Matchers.apply(this, arguments);
+//    };
+//    j$.util.inherit(this.matchersClass, j$.Matchers);
+//
+//    j$.Matchers.wrapInto_(j$.Matchers.prototype, this.matchersClass);
+//
+//    var expectationFactory = function(actual, spec) {
+//      var expect = new (self.matchersClass)(self, actual, spec);
+//      expect.not = new (self.matchersClass)(self, actual, spec, true);
+//      return expect;
+//    };
 
-    j$.Matchers.wrapInto_(j$.Matchers.prototype, this.matchersClass);
+    var customEqualityTesters = [];
+    this.addCustomEqualityTester = function(tester) {
+      customEqualityTesters.push(tester);
+    };
+
+    j$.Expectation.addMatchers(j$.matchers);
 
     var expectationFactory = function(actual, spec) {
-      var expect = new (self.matchersClass)(self, actual, spec);
-      expect.not = new (self.matchersClass)(self, actual, spec, true);
-      return expect;
+      return j$.Expectation.Factory({
+        util: j$.matchersUtil,
+        customEqualityTesters: customEqualityTesters,
+        actual: actual,
+        addExpectationResult: addExpectationResult
+      });
+
+      function addExpectationResult(passed, result) {
+        return spec.addExpectationResult(passed, result);
+      }
     };
 
     var specStarted = function(spec) {
@@ -68,7 +88,7 @@ getJasmineRequireObj().Env = function(j$) {
       };
     };
 
-    var specConstructor = j$.Spec;
+    var specConstructor = j$.Spec; // TODO: inline this
 
     var getSpecName = function(spec, currentSuite) {
       return currentSuite.getFullName() + ' ' + spec.description + '.';
@@ -147,6 +167,7 @@ getJasmineRequireObj().Env = function(j$) {
 
       function specResultCallback(result) {
         self.removeAllSpies();
+        customEqualityTesters.length = 0;
         self.clock.uninstall();
         self.currentSpec = null;
         self.reporter.specDone(result);

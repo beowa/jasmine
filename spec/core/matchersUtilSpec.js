@@ -129,8 +129,10 @@
       expect(j$.matchersUtil.contains(["foo", {some: "bar"}], {some: "bar"})).toBe(true);
     });
 
-    xit("uses custom equality testers if passed in", function() {
-      // TODO: this needs to work, but as a pass through from the matchers
+    it("uses custom equality testers if passed in and actual is an Array", function() {
+      var customTester = function(a,b) {return true;};
+
+      expect(j$.matchersUtil.contains([1,2], 2, [customTester])).toBe(true);
     });
   });
 

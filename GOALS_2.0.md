@@ -36,19 +36,16 @@
 
 ### Easy
 
+* unify params to ctors: options vs. attrs.
+* This will be a lot of the TODOs, but clean up & simplify Env.js (is this a 2.1 task?)
+
 ## Other Topics
 
-* Build - can we, should we redo the build and release process AGAIN in order to make it less arcane
-  * Want to add JSHint to build
-  * Use a standard JS/Node based concat system instead of custom Ruby?
 * Docs
-  * JsDoc is a pain to host and RubyMine is pretty good at navigating. I say we kill it officially
   * Docco has gone over well. Should we annotate all the sources and then have Pages be more complex, having tutorials and annotated source like Backbone? Are we small enough?
-
-# Build
-
-* lib -> generated
-* 
+  * Need examples for:
+     * How to build a Custom Matcher
+     * How to add a custom equality tester
 
 
 

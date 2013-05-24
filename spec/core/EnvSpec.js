@@ -129,8 +129,10 @@ describe("Env", function() {
       }).toThrow(j$.Spec.pendingSpecExceptionMessage);
     });
   });
+
 });
 
+// TODO: move these into a separate file
 describe("Env (integration)", function() {
 
   it("Suites execute as expected (no nesting)", function() {
@@ -300,5 +302,71 @@ describe("Env (integration)", function() {
     expect(topLevelSpec.getFullName()).toBe("my tests are sometimes top level.");
     expect(nestedSpec.getFullName()).toBe("my tests are sometimes singly nested.");
     expect(doublyNestedSpec.getFullName()).toBe("my tests are sometimes even doubly nested.");
+  });
+
+  it("Custom equality testers should be per spec", function() {
+    var env = new j$.Env({global: { setTimeout: setTimeout }}),
+      reporter = jasmine.createSpyObj('fakeReproter', [
+        "jasmineStarted",
+        "jasmineDone",
+        "suiteStarted",
+        "suiteDone",
+        "specStarted",
+        "specDone"
+      ]);
+
+    env.addReporter(reporter);
+
+    env.describe("testing custom equality testers", function() {
+      env.it("with a custom tester", function(){
+        env.addCustomEqualityTester(function(a, b){ return true; });
+        env.expect("a").toEqual("b");
+      });
+
+      env.it("without a custom tester", function(){
+        env.expect("a").toEqual("b");
+      });
+    });
+
+    env.execute();
+
+    var firstSpecResult = reporter.specDone.argsForCall[0][0],
+      secondSpecResult = reporter.specDone.argsForCall[1][0];
+
+    expect(firstSpecResult.status).toEqual("passed");
+    expect(secondSpecResult.status).toEqual("failed");
+  });
+
+  it("Custom equality testers for toContain should be per spec", function() {
+    var env = new j$.Env({global: { setTimeout: setTimeout }}),
+      reporter = jasmine.createSpyObj('fakeReproter', [
+        "jasmineStarted",
+        "jasmineDone",
+        "suiteStarted",
+        "suiteDone",
+        "specStarted",
+        "specDone"
+      ]);
+
+    env.addReporter(reporter);
+
+    env.describe("testing custom equality testers", function() {
+      env.it("with a custom tester", function(){
+        env.addCustomEqualityTester(function(a, b){ return true; });
+        env.expect(["a"]).toContain("b");
+      });
+
+      env.it("without a custom tester", function(){
+        env.expect("a").toContain("b");
+      });
+    });
+
+    env.execute();
+
+    var firstSpecResult = reporter.specDone.argsForCall[0][0],
+      secondSpecResult = reporter.specDone.argsForCall[1][0];
+
+    expect(firstSpecResult.status).toEqual("passed");
+    expect(secondSpecResult.status).toEqual("failed");
   });
 });

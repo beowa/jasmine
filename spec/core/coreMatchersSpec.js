@@ -288,7 +288,19 @@ describe("Matchers (new)", function() {
         matcher = j$.matchers.toContain(util);
 
       result = matcher.compare("ABC", "B");
-      expect(util.contains).toHaveBeenCalledWith("ABC", "B");
+      expect(util.contains).toHaveBeenCalledWith("ABC", "B", []);
+      expect(result.pass).toBe(true);
+    });
+
+    it("delegates to j$.matchersUtil.contains, passing in equality testers if present", function() {
+      var util = {
+          contains: j$.createSpy('delegated-contains').andReturn(true)
+        },
+        customEqualityTesters = ['a', 'b'],
+        matcher = j$.matchers.toContain(util, customEqualityTesters);
+
+      result = matcher.compare("ABC", "B");
+      expect(util.contains).toHaveBeenCalledWith("ABC", "B", ['a', 'b']);
       expect(result.pass).toBe(true);
     });
   });
@@ -305,13 +317,20 @@ describe("Matchers (new)", function() {
 
       expect(util.equals).toHaveBeenCalledWith(1, 1, []);
       expect(result.pass).toBe(true);
+    });
 
-      util.equals.andReturn(false);
+    it("delegates custom equality testers, if present", function() {
+      var util = {
+          equals: j$.createSpy('delegated-equals').andReturn(true)
+        },
+        customEqualityTesters = ['a', 'b'],
+        matcher = j$.matchers.toEqual(util, customEqualityTesters),
+        result;
 
-      result = matcher.compare(1, 2);
+      result = matcher.compare(1, 1);
 
-      expect(util.equals).toHaveBeenCalledWith(1, 2, []);
-      expect(result.pass).toBe(false);
+      expect(util.equals).toHaveBeenCalledWith(1, 1, ['a', 'b']);
+      expect(result.pass).toBe(true);
     });
   });
 

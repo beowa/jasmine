@@ -114,8 +114,8 @@ getJasmineRequireObj().matchers = function() {
     };
   };
 
-  matchers.toEqual = function(util) {
-    var customEqualityTesters = [];
+  matchers.toEqual = function(util, customEqualityTesters) {
+    customEqualityTesters = customEqualityTesters || [];
 
     return {
       compare: function(actual, expected) {
@@ -126,9 +126,6 @@ getJasmineRequireObj().matchers = function() {
         result.pass = util.equals(actual, expected, customEqualityTesters);
 
         return result;
-      },
-      addTester: function(tester) {
-        customEqualityTesters.push(tester);
       }
     };
   };
@@ -254,16 +251,18 @@ getJasmineRequireObj().matchers = function() {
     };
   };
 
-  matchers.toContain = function(util) {
+  matchers.toContain = function(util, customEqualityTesters) {
+    customEqualityTesters = customEqualityTesters || [];
+
     return {
       compare: function(actual, expected) {
 
         return {
-          pass: util.contains(actual, expected)
+          pass: util.contains(actual, expected, customEqualityTesters)
         };
       }
     };
   };
 
   return matchers;
-}
+};

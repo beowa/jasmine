@@ -1,4 +1,4 @@
-   describe("Expectation", function() {
+describe("Expectation", function() {
   it(".addMatchers makes matchers available to any expectation", function() {
     var matchers = {
         toFoo: function() {},
@@ -20,6 +20,31 @@
     expect(builtExpectation instanceof j$.Expectation).toBe(true);
     expect(builtExpectation.not instanceof j$.Expectation).toBe(true);
     expect(builtExpectation.not.isNot).toBe(true);
+  });
+
+  it("wraps matchers's compare functions, passing in matcher dependencies", function() {
+    var fakeCompare = function() { return { pass: true }; },
+      matcherFactory = jasmine.createSpy("matcher").andReturn({ compare: fakeCompare }),
+      matchers = {
+        toFoo: matcherFactory
+      },
+      util = {},
+      customEqualityTesters = ['a'],
+      addExpectationResult = jasmine.createSpy("addExpectationResult"),
+      expectation;
+
+    j$.Expectation.addMatchers(matchers);
+
+    expectation = new j$.Expectation({
+      util: util,
+      customEqualityTesters: customEqualityTesters,
+      actual: "an actual",
+      addExpectationResult: addExpectationResult
+    });
+
+    expectation.toFoo("hello");
+
+    expect(matcherFactory).toHaveBeenCalledWith(util, customEqualityTesters)
   });
 
   it("wraps matchers's compare functions, passing the actual and expected", function() {
