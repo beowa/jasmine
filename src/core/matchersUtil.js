@@ -1,6 +1,5 @@
 getJasmineRequireObj().matchersUtil = function(j$) {
   // TODO: what to do about jasmine.pp not being inject? move to JSON.stringify? gut PrettyPrinter?
-  // TODO: does this still need to be closed like this?
 
   return {
     equals: function(a, b, customTesters) {

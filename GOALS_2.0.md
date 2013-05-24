@@ -26,13 +26,11 @@
     * isA_
   * unimplementedMethod_, used by PrettyPrinter
   * jasmine.util should be util closure inside of env or something
-    * argsToArray is used for Spies and matching
-    * inherit is for how matchers are added/mixed in, reporters, and pretty printers
+    * argsToArray is used for Spies and matching (and can be replaced)
+    * inherit is only for PrettyPrinter now
     * formatException is used only inside Env/spec
     * htmlEscape is for messages in matchers - should this be HTML at all? Is that * Matchers improvements
   * move AddMatchers to Env & global (away from spec)
-  * make matchers unit-testable
-  * write doc on how to make a matcher
 
 ### Easy
 
