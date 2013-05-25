@@ -29,13 +29,17 @@
     * argsToArray is used for Spies and matching (and can be replaced)
     * inherit is only for PrettyPrinter now
     * formatException is used only inside Env/spec
-    * htmlEscape is for messages in matchers - should this be HTML at all? Is that * Matchers improvements
+    * htmlEscape is for messages in matchers - should this be HTML at all?
+  * Matchers improvements
   * move AddMatchers to Env & global (away from spec)
 
 ### Easy
 
 * unify params to ctors: options vs. attrs.
 * This will be a lot of the TODOs, but clean up & simplify Env.js (is this a 2.1 task?)
+* Pretty printing
+  * move away from pretty printer and to a JSON.stringify implementation?
+  * jasmineToString vs. custom toString ?
 
 ## Other Topics
 

@@ -1,4 +1,4 @@
-   describe("matchersUtil", function() {
+describe("matchersUtil", function() {
   describe("equals", function() {
     it("passes for literals that are threequal", function() {
       expect(j$.matchersUtil.equals(null, null)).toBe(true);
