@@ -29,20 +29,6 @@ getJasmineRequireObj().Env = function(j$) {
     this.nextSuiteId_ = 0;
     this.equalityTesters_ = [];
 
-    // wrap matchers
-//    this.matchersClass = function() {
-//      j$.Matchers.apply(this, arguments);
-//    };
-//    j$.util.inherit(this.matchersClass, j$.Matchers);
-//
-//    j$.Matchers.wrapInto_(j$.Matchers.prototype, this.matchersClass);
-//
-//    var expectationFactory = function(actual, spec) {
-//      var expect = new (self.matchersClass)(self, actual, spec);
-//      expect.not = new (self.matchersClass)(self, actual, spec, true);
-//      return expect;
-//    };
-
     var customEqualityTesters = [];
     this.addCustomEqualityTester = function(tester) {
       customEqualityTesters.push(tester);

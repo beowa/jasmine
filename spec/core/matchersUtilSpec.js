@@ -94,6 +94,31 @@ describe("matchersUtil", function() {
       expect(j$.matchersUtil.equals(actual, expected)).toBe(false);
     });
 
+    it("passes when Any is used", function() {
+      var number = 3,
+        anyNumber = new j$.Any(Number);
+
+      expect(j$.matchersUtil.equals(number, anyNumber)).toBe(true);
+      expect(j$.matchersUtil.equals(anyNumber, number)).toBe(true);
+    });
+
+    it("fails when Any is compared to something unexepcted", function() {
+      var number = 3,
+        anyString = new j$.Any(String);
+
+      expect(j$.matchersUtil.equals(number, anyString)).toBe(false);
+      expect(j$.matchersUtil.equals(anyString, number)).toBe(false);
+    });
+
+    it("passes when ObjectContaining is used", function() {
+      var obj = {
+        foo: 3,
+        bar: 7
+        };
+
+      expect(j$.matchersUtil.equals(obj, new j$.ObjectContaining({foo: 3}))).toBe(true);
+    });
+
     it("passes when a custom equality matcher returns true", function() {
       var tester = function(a, b) { return true; };
 

@@ -1,4 +1,4 @@
-describe("Matchers (new)", function() {
+describe("Matchers", function() {
   describe("toBe", function() {
     it("passes when actual === expected", function() {
       var matcher = j$.matchers.toBe(),
