@@ -94,6 +94,14 @@ describe("matchersUtil", function() {
       expect(j$.matchersUtil.equals(actual, expected)).toBe(false);
     });
 
+    it("fails when comparing an empty object to an empty array (issue #114)", function() {
+      var emptyObject = {},
+        emptyArray = [];
+
+      expect(j$.matchersUtil.equals(emptyObject, emptyArray)).toBe(false);
+      expect(j$.matchersUtil.equals(emptyArray, emptyObject)).toBe(false);
+    });
+
     it("passes when Any is used", function() {
       var number = 3,
         anyNumber = new j$.Any(Number);
