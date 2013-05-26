@@ -34,7 +34,7 @@ getJasmineRequireObj().Env = function(j$) {
       customEqualityTesters.push(tester);
     };
 
-    j$.Expectation.addMatchers(j$.matchers);
+    j$.Expectation.addCoreMatchers(j$.matchers);
 
     var expectationFactory = function(actual, spec) {
       return j$.Expectation.Factory({
@@ -153,6 +153,7 @@ getJasmineRequireObj().Env = function(j$) {
 
       function specResultCallback(result) {
         self.removeAllSpies();
+        j$.Expectation.resetMatchers();
         customEqualityTesters.length = 0;
         self.clock.uninstall();
         self.currentSpec = null;
@@ -198,15 +199,8 @@ getJasmineRequireObj().Env = function(j$) {
     };
   }
 
-  //TODO: shim Spec addMatchers behavior into Env. Should be rewritten to remove globals, etc.
-  Env.prototype.addMatchers = function(matchersPrototype) {
-    var parent = this.matchersClass;
-    var newMatchersClass = function() {
-      parent.apply(this, arguments);
-    };
-    j$.util.inherit(newMatchersClass, parent);
-    j$.Matchers.wrapInto_(matchersPrototype, newMatchersClass);
-    this.matchersClass = newMatchersClass;
+  Env.prototype.addMatchers = function(matchersToAdd) {
+    j$.Expectation.addMatchers(matchersToAdd);
   };
 
   Env.prototype.version = function() {

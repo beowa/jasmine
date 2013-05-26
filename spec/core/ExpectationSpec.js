@@ -14,6 +14,38 @@ describe("Expectation", function() {
     expect(expectation.toBar).toBeDefined();
   });
 
+  it(".addCoreMatchers makes matchers available to any expectation", function() {
+    var coreMatchers = {
+        toQuux: function() {}
+      },
+      expectation;
+
+    j$.Expectation.addCoreMatchers(coreMatchers);
+
+    expectation = new j$.Expectation({});
+
+    expect(expectation.toQuux).toBeDefined();
+  });
+
+  it(".resetMatchers should keep only core matchers", function() {
+    var matchers = {
+        toFoo: function() {}
+      },
+      coreMatchers = {
+        toQuux: function() {}
+      },
+      expectation;
+
+    j$.Expectation.addCoreMatchers(coreMatchers);
+    j$.Expectation.addMatchers(matchers);
+    j$.Expectation.resetMatchers();
+
+    expectation = new j$.Expectation({});
+
+    expect(expectation.toQuux).toBeDefined();
+    expect(expectation.toFoo).toBeUndefined();
+  });
+
   it("Factory builds an expectaion/negative expectation", function() {
     var builtExpectation = j$.Expectation.Factory();
 

@@ -239,12 +239,12 @@ describe("Env (integration)", function() {
     env.addReporter(reporter);
 
     env.describe("testing custom equality testers", function() {
-      env.it("with a custom tester", function(){
-        env.addCustomEqualityTester(function(a, b){ return true; });
+      env.it("with a custom tester", function() {
+        env.addCustomEqualityTester(function(a, b) { return true; });
         env.expect("a").toEqual("b");
       });
 
-      env.it("without a custom tester", function(){
+      env.it("without a custom tester", function() {
         env.expect("a").toEqual("b");
       });
     });
@@ -256,6 +256,36 @@ describe("Env (integration)", function() {
 
     expect(firstSpecResult.status).toEqual("passed");
     expect(secondSpecResult.status).toEqual("failed");
+  });
+
+  it("Custom matchers should be per spec", function() {
+    var env = new j$.Env({global: { setTimeout: setTimeout }}),
+      matchers = {
+        toFoo: function() {}
+      },
+      reporter = jasmine.createSpyObj('fakeReproter', [
+        "jasmineStarted",
+        "jasmineDone",
+        "suiteStarted",
+        "suiteDone",
+        "specStarted",
+        "specDone"
+      ]);
+
+    env.addReporter(reporter);
+
+    env.describe("testing custom matchers", function() {
+      env.it("with a custom matcher", function() {
+        env.addMatchers(matchers);
+        expect(env.expect().toFoo).toBeDefined();
+      });
+
+      env.it("without a custom matcher", function() {
+        expect(env.expect().toFoo).toBeUndefined();
+      });
+    });
+
+    env.execute();
   });
 
   it("Custom equality testers for toContain should be per spec", function() {
@@ -272,12 +302,12 @@ describe("Env (integration)", function() {
     env.addReporter(reporter);
 
     env.describe("testing custom equality testers", function() {
-      env.it("with a custom tester", function(){
-        env.addCustomEqualityTester(function(a, b){ return true; });
+      env.it("with a custom tester", function() {
+        env.addCustomEqualityTester(function(a, b) { return true; });
         env.expect(["a"]).toContain("b");
       });
 
-      env.it("without a custom tester", function(){
+      env.it("without a custom tester", function() {
         env.expect("a").toContain("b");
       });
     });
